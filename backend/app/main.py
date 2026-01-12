@@ -1,22 +1,21 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from .routers.alumno import router as alumno_router
-from .routers.curso import router as curso_router
-from .routers.user import router as user_router
-from .routers.auth import router as auth_router
+from .routers.viatger import router as viatger_router
+from .routers.creador import router as creador_router
+from .routers.administrador import router as administrador_router
 
-app = FastAPI(title="CRUD N:N en FastAPI con MySQL")
+app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
 
 # Ruta raíz
 @app.get("/")
 def read_root():
-    return {"message": "API de Alumnos y Cursos"}
+    return {"message": "API agencia de viajes"}
 
 # Incluir rutas
-app.include_router(alumno_router)
-app.include_router(curso_router)
-app.include_router(user_router)
-app.include_router(auth_router)
+app.include_router(viatger_router)
+app.include_router(creador_router)
+app.include_router(administrador_router)
+
 
 # Lista de orígenes permitidos
 origins = [
@@ -33,5 +32,4 @@ app.add_middleware(
     allow_headers=["*"],    # permite todas las cabeceras
 )
 
-#user: Jorge
-#password: Jorge123
+
