@@ -1,7 +1,7 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from .routers.viatger import router as viatger_router
-from .routers.creador import router as creador_router
+from .routers.viajero import router as viatger_router
+from .routers.creator import router as creador_router
 from .routers.admin import router as admin_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
