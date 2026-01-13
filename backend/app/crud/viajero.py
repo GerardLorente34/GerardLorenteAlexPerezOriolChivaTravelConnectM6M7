@@ -27,7 +27,7 @@ def update_viajero(db: Session, viajero_id: int, viajero_in: ViajeroUpdate):
     
     # actualizamos solo los campos que tienen valor
     if viajero_in.nombre is not None:
-        db_viajero.nimbre = viajero_in.nombre
+        db_viajero.nombre = viajero_in.nombre
     if viajero_in.email is not None:
         db_viajero.email = viajero_in.email
 
