@@ -1,7 +1,5 @@
 from sqlalchemy import Column, Integer, Enum as SQLEnum, Text, ForeignKey
 from sqlalchemy.orm import relationship
-
-from backend.app.models.peticionPromocion import EstadoPromocion
 from ..db.database import Base
 import enum
 
