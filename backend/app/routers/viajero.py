@@ -48,6 +48,3 @@ def ruta_protegida(usuario: str = Depends(get_current_user)):
         "mensaje": "Accesso concedido",
         "usuario": usuario
     }
-
-
-    
