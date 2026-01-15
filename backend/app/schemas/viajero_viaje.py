@@ -15,7 +15,7 @@ class ViajeroUpdate(BaseModel):
 class ViajeCreate(BaseModel):
     nombre: str
 
-class VaijeUpdate(BaseModel):
+class ViajeUpdate(BaseModel):
     nombre: Optional[str] = None
 
 #OUTPUT

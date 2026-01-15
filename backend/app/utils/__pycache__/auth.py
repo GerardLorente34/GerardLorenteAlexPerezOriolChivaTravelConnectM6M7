@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from typing import Optional
 from .config import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 from ..db.database import SessionLocal
-from ..models.user import User
+from ..models.usuario import Usuario
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/long")
@@ -14,20 +14,20 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/long")
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-def get_user_by_username(username: str):
+def get_current_user(username: str):
     db = SessionLocal()
     try:
-        return db.query(User).filter(User.username == username).first()
+        return db.query(Usuario).filter(Usuario.username == username).first()
     finally:
         db.close()
 
 def authenticate_user(username: str, password: str):
-    user = get_user_by_username(username)
-    if not user:
+    usuario = get_current_user(username)
+    if not usuario:
         return False
-    if not verify_password(password, user.hashed_password):
+    if not verify_password(password, usuario.hashed_password):
         return False
-    return user
+    return usuario
 
 def create_acces_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
