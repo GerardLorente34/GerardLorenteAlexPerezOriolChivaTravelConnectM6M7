@@ -1,41 +1,47 @@
 from sqlalchemy.orm import Session, joinedload
-from ..models.viajero import Viajero
-from ..models.viajero_viaje import ViajeroViaje
-from ..schemas.viajero_viaje import ViajeroResponse, ViajeroUpdate
+from ..models.usuario import Usuario, RolUsuario
+from ..schemas.viajero_viaje import ViajeroCreate, ViajeroUpdate
 
 def get_viajeros(db: Session):
-    return db.query(Viajero).all()
+    return db.query(Usuario).filter(Usuario.rol == RolUsuario.VIAJERO).all()
 
 def get_viajero(db: Session, viajero_id: int):
-    return db.query(Viajero).options(
-        joinedload(Viajero.viajes).joinedload(ViajeroViaje.viaje)
-    ).filter(Viajero.id == viajero_id).first()
+    return (
+        db.query(Usuario)
+        .options(joinedload(Usuario.viajes_inscritos))
+        .filter(Usuario.id == viajero_id, Usuario.rol == RolUsuario.VIAJERO)
+        .first()
+    )
 
-def create_viajero(db: Session, viajero: ViajeroResponse):
-    db_viajero = Viajero(nombre=viajero.nombre, email=viajero.email)
+def create_viajero(db: Session, viajero: ViajeroCreate):
+    db_viajero = Usuario(
+        username=viajero.username,
+        email=viajero.email,
+        hashed_password="",  # TODO: generar hash al registrar
+        nombre_completo=viajero.nombre_completo,
+        rol=RolUsuario.VIAJERO,
+        bio=viajero.bio,
+    )
     db.add(db_viajero)
     db.commit()
     db.refresh(db_viajero)
     return db_viajero
 
 def update_viajero(db: Session, viajero_id: int, viajero_in: ViajeroUpdate):
-    # buscamos el viajero
-    db_viajero = db.query(Viajero).filter(Viajero.id == viajero_id).first()
-
+    db_viajero = db.query(Usuario).filter(
+        Usuario.id == viajero_id, Usuario.rol == RolUsuario.VIAJERO
+    ).first()
     if not db_viajero:
         return None
-    
-    # actualizamos solo los campos que tienen valor
-    if viajero_in.nombre is not None:
-        db_viajero.nombre = viajero_in.nombre
-    if viajero_in.email is not None:
-        db_viajero.email = viajero_in.email
-
+    if viajero_in.nombre_completo is not None:
+        db_viajero.nombre_completo = viajero_in.nombre_completo
+    if viajero_in.bio is not None:
+        db_viajero.bio = viajero_in.bio
     db.commit()
     db.refresh(db_viajero)
     return db_viajero
 
-def delete_alumno(db: Session, viajero_id: int):
+def delete_viajero(db: Session, viajero_id: int):
     db_viajero = get_viajero(db, viajero_id)
     if db_viajero:
         db.delete(db_viajero)
