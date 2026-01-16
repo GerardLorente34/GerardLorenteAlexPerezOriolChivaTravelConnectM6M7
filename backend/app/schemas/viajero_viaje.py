@@ -1,16 +1,18 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from datetime import date
 
 
-#INPUT
+# INPUT
 class ViajeroCreate(BaseModel):
-    nombre: str
-    email: str
+    username: str
+    email: EmailStr
+    nombre_completo: str
+    bio: Optional[str] = None
 
 class ViajeroUpdate(BaseModel):
-    nombre: Optional[str] = None
-    email: Optional[str] = None
+    nombre_completo: Optional[str] = None
+    bio: Optional[str] = None
 
 class ViajeCreate(BaseModel):
     nombre: str
@@ -18,12 +20,13 @@ class ViajeCreate(BaseModel):
 class ViajeUpdate(BaseModel):
     nombre: Optional[str] = None
 
-#OUTPUT
-
+# OUTPUT
 class ViajeroResponse(BaseModel):
     id: int
-    nombre: str
-    email: str
+    username: str
+    email: EmailStr
+    nombre_completo: str
+    bio: Optional[str] = None
 
     class Config:
         from_attributes = True
@@ -37,7 +40,7 @@ class ViajeResponse(BaseModel):
 
 # OUPUT ANIDADO
 
-#Inscripcion al viaje
+# Inscripcion al viaje
 class InscripcionViaje(BaseModel):
     fecha_inscripcion: date
     viaje: ViajeResponse # nos unimos al viaje
@@ -45,7 +48,7 @@ class InscripcionViaje(BaseModel):
     class Config:
         from_attributes = True
 
-#Inscripcion del viajero
+# Inscripcion del viajero
 class InscripcionViajero(BaseModel):
     fecha_inscripcion: date
     viajero: ViajeroResponse #unimos al viajero
