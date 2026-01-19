@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from .routers.viajero import router as viatger_router
 from .routers.creator import router as creador_router
 from .routers.admin import router as admin_router
+from .utils.auth import router as auth_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
 
@@ -18,6 +19,7 @@ def read_root():
 app.include_router(viatger_router)
 app.include_router(creador_router)
 app.include_router(admin_router)
+app.include_router(auth_router)
 
 
 # Lista de orígenes permitidos
