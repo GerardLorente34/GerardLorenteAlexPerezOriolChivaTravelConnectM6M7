@@ -1,9 +1,15 @@
-.inicoSesion-container {
-  padding: 2rem;
+.inicioSesion-container {
+  margin-top: 80px;
+  padding-left: 3rem;
+}
+
+.inicioSesion-container h1 {
+  margin-top: 20px;
 }
 
 .inicioSesion-form {
   margin-top: 1.5rem;
+  padding-left: 3rem;
 }
 
 .inicioSesion-form div {

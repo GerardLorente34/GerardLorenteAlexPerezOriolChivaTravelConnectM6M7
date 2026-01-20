@@ -1,4 +1,5 @@
 import Header from "../componentes/Header";
+import "./registrar.css";
 
 export default function Registrar() {
   return (
@@ -8,6 +9,7 @@ export default function Registrar() {
       <h1>Registrarse</h1>
 
       <form className="registrar-form">
+        <br/>
         <div>
           <label>Nombre:</label><br />
           <input type="text" />
@@ -25,7 +27,7 @@ export default function Registrar() {
         <br/>
         <div>
           <label>Verificar contraseña:</label><br />
-          <input type="VeriPassword" />
+          <input type="password" />
         </div>
         <br/>
         <button type="submit">Crear cuenta</button>

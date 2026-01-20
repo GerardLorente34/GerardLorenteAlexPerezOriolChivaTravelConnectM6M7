@@ -11,7 +11,10 @@ export default function Header() {
       </div>
 
       <nav className="nav-enlaces">
-        <Link to="/">Inicio</Link>
+        {location.pathname !== "/" && (
+          <Link to="/">Inicio</Link>
+        )}
+        
         <Link to="/inicioSesion">Iniciar sesión</Link>
         <Link to="/registrar">Registrarse</Link>
       </nav>
