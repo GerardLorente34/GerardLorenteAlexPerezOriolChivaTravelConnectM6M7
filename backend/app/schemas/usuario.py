@@ -3,6 +3,11 @@ from typing import Optional
 from ..models.usuario import RolUsuario
 
 
+class UsuarioUpdate(BaseModel):
+    nombre_completo: Optional[str] = None
+    bio: Optional[str] = None
+
+
 class UsuarioResponse(BaseModel):
     id: int
     username: str
