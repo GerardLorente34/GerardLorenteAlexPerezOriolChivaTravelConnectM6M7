@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session, joinedload
 from ..models.usuario import Usuario, RolUsuario
-from ..schemas.viajero_viaje import ViajeroCreate, ViajeroUpdate
+from ..models.viajero import Viaje, EstadoViaje
+from ..schemas.viajero_viaje import ViajeroCreate, ViajeroUpdate, ViajeCreate, ViajeUpdate
 
 def get_viajeros(db: Session):
     return db.query(Usuario).filter(Usuario.rol == RolUsuario.VIAJERO).all()
