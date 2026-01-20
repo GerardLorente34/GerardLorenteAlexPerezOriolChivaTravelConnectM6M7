@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import Logo from "../componentes/logo";
+import Header from "../componentes/Header";
 
 export default function Registrar() {
   return (
     <div className="registrar-container">
-      <Logo/>
+      <Header/>
+      <br/>
       <h1>Registrarse</h1>
 
       <form className="registrar-form">
@@ -12,15 +12,20 @@ export default function Registrar() {
           <label>Nombre:</label><br />
           <input type="text" />
         </div>
-
+        <br/>
         <div>
           <label>Email:</label><br />
           <input type="email" />
         </div>
-
+        <br/>
         <div>
           <label>Contraseña:</label><br />
           <input type="password" />
+        </div>
+        <br/>
+        <div>
+          <label>Verificar contraseña:</label><br />
+          <input type="VeriPassword" />
         </div>
         <br/>
         <button type="submit">Crear cuenta</button>
@@ -28,7 +33,6 @@ export default function Registrar() {
         <br/>
       </form>
 
-      <Link to="/">Volver a inicio</Link>
     </div>
   );
 }

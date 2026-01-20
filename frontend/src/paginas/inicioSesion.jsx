@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import Logo from "../componentes/logo";
+import Header from "../componentes/Header";
 import "./inicioSesion.css";
 
 export default function InicioSesion() {
   return (
     <div className="inicioSesion-container">
-      <Logo/>
+      <Header/>
+      <br/>
       <h1>Iniciar sesión</h1>
 
       <form className="inicioSesion-form">
@@ -13,7 +13,7 @@ export default function InicioSesion() {
           <label>Email:</label><br />
           <input type="email" />
         </div>
-
+        <br/>
         <div>
           <label>Contraseña:</label><br />
           <input type="password" />
@@ -25,7 +25,6 @@ export default function InicioSesion() {
         <br/>
       </form>
 
-      <Link to="/">Volver a inicio</Link>
     </div>
   );
 }
