@@ -1,9 +1,11 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
 from .routers.viajero import router as viatger_router
-from .routers.creator import router as creador_router
+from .routers.creador import router as creador_router
 from .routers.admin import router as admin_router
 from .utils.users import router as users_router
+from .routers.trips import router as trips_router
+from .routers.promocion import router as promocion_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
 
@@ -18,6 +20,8 @@ app.include_router(viatger_router)
 app.include_router(creador_router)
 app.include_router(admin_router)
 app.include_router(users_router)
+app.include_router(trips_router)
+app.include_router(promocion_router)
 
 
 # Lista de orígenes permitidos

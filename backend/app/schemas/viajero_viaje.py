@@ -16,9 +16,19 @@ class ViajeroUpdate(BaseModel):
 
 class ViajeCreate(BaseModel):
     nombre: str
+    destino: str
+    fecha_inicio: date
+    fecha_fin: date
+    descripcion: Optional[str] = None
+    maximo_participantes: int
 
 class ViajeUpdate(BaseModel):
     nombre: Optional[str] = None
+    destino: Optional[str] = None
+    fecha_inicio: Optional[date] = None
+    fecha_fin: Optional[date] = None
+    descripcion: Optional[str] = None
+    maximo_participantes: Optional[int] = None
 
 # OUTPUT
 class ViajeroResponse(BaseModel):
@@ -34,6 +44,14 @@ class ViajeroResponse(BaseModel):
 class ViajeResponse(BaseModel):
     id: int
     nombre: str
+    destino: str
+    fecha_inicio: date
+    fecha_fin: date
+    descripcion: Optional[str] = None
+    maximo_participantes: int
+    total_participantes: int
+    estado: str
+    creador_id: int
 
     class Config:
         from_attributes = True
