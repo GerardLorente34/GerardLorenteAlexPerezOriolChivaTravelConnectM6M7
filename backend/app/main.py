@@ -4,10 +4,9 @@ from .routers.viajero import router as viatger_router
 from .routers.creator import router as creador_router
 from .routers.admin import router as admin_router
 from .utils.auth import router as auth_router
+from .utils.users import router as users_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
-
-print("APP ARRANCADA CORRECTAMENTE")
 
 
 # Ruta raíz
@@ -20,6 +19,7 @@ app.include_router(viatger_router)
 app.include_router(creador_router)
 app.include_router(admin_router)
 app.include_router(auth_router)
+app.include_router(users_router)
 
 
 # Lista de orígenes permitidos
