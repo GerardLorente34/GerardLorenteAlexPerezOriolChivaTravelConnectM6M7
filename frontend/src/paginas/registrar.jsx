@@ -4,16 +4,22 @@ import "./registrar.css";
 
 export default function Registrar() {
   const [nombre, setNombre] = useState("");
+  const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [veriPassword, setVeriPassword] = useState("");
 
   const limpiarFormulario = () => {
     setNombre("");
+    setNickName("");
     setEmail("");
     setPassword("");
     setVeriPassword("");
   };
+
+  const handleSubmit = async () =>{
+    
+  }
 
   return (
     <><Header />
@@ -25,6 +31,11 @@ export default function Registrar() {
         <div>
           <label>Nombre:</label><br />
           <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)}/>
+        </div>
+        <br />
+        <div>
+          <label>NickName:</label><br />
+          <input type="text" value={nickName} onChange={(e) => setNickName(e.target.value)}/>
         </div>
         <br />
         <div>

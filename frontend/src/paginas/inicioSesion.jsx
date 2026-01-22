@@ -10,18 +10,16 @@ export default function InicioSesion() {
 
       <form className="inicioSesion-form">
         <div>
-          <label>Email:</label><br />
-          <input type="email" />
+          <label>NickName:</label><br />
+          <input type="nickName" />
         </div>
-        <br />
+
         <div>
           <label>Contraseña:</label><br />
           <input type="password" />
         </div>
 
-        <br />
         <button type="submit">Iniciar</button>
-        <br />
         <br />
       </form>
 
