@@ -17,9 +17,29 @@ export default function Registrar() {
     setVeriPassword("");
   };
 
-  const handleSubmit = async () =>{
-    
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    console.log("Enviando formulario...");
+
+    const data = {
+      nombre,
+      nickName,
+      email,
+      password,
+      veriPassword
+    }
+
+    const response = await fetch("http://localhost:8000/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+    const result = await response.json();
+    console.log(result);
+  };
 
   return (
     <><Header />
@@ -27,7 +47,7 @@ export default function Registrar() {
       <br />
       <h1>Registrarse</h1>
 
-      <form className="registrar-form">
+      <form className="registrar-form" onSubmit={handleSubmit}>
         <div>
           <label>Nombre:</label><br />
           <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)}/>

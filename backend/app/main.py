@@ -25,6 +25,7 @@ app.include_router(auth_router)
 origins = [
     "http://localhost:5500",  # si tu frontend corre aquí
     "http://127.0.0.1:5500",
+    "http://localhost:8000"
 ]
 
 app.add_middleware(
