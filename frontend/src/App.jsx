@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<PaginaInicio />} />
         <Route path="/inicioSesion" element={<InicioSesion />} />
-        <Route path="/Registrar" element={<Registrar />} />
+        <Route path="/registrar" element={<Registrar />} />
       </Routes>
     </BrowserRouter>
   );
