@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from .routers.viajero import router as viatger_router
 from .routers.creador import router as creador_router
 from .routers.admin import router as admin_router
-from .utils.users import router as users_router
+from .utils.usuario import router as users_router
 from app.routers.auth import router as auth_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
