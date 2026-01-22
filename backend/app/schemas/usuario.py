@@ -2,7 +2,6 @@ from pydantic import BaseModel, EmailStr
 from typing import Optional
 from ..models.usuario import RolUsuario
 
-
 class UsuarioUpdate(BaseModel):
     nombre_completo: Optional[str] = None
     bio: Optional[str] = None
@@ -18,3 +17,12 @@ class UsuarioResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class UsuarioCreate(BaseModel):
+    username: str
+    email: EmailStr
+    hashed_password: str
+    nombre_completo: str
+    rol: Optional[RolUsuario] = RolUsuario.VIAJERO
+    bio: Optional[str] = None
