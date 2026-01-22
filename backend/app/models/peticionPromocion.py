@@ -5,9 +5,9 @@ import enum
 
 # Enum para el estado de la petición de promoción
 class EstadoPromocion(str, enum.Enum):
-    Pendiente = "pendiente"
-    Aprobado = "aprobado"
-    Rechazado = "rechazado"
+    Pendiente = "Pendiente"
+    Aprobado = "Aprobado"
+    Rechazado = "Rechazado"
 
 class PeticionPromocion(Base):
     __tablename__ = "peticiones"
