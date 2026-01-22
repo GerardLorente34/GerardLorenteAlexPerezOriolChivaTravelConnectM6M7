@@ -3,9 +3,9 @@ import "./inicioSesion.css";
 
 export default function InicioSesion() {
   return (
+    <><Header />
     <div className="inicioSesion-container">
-      <Header/>
-      <br/>
+      <br />
       <h1>Iniciar sesión</h1>
 
       <form className="inicioSesion-form">
@@ -13,18 +13,18 @@ export default function InicioSesion() {
           <label>Email:</label><br />
           <input type="email" />
         </div>
-        <br/>
+        <br />
         <div>
           <label>Contraseña:</label><br />
           <input type="password" />
         </div>
 
-        <br/>
+        <br />
         <button type="submit">Iniciar</button>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </form>
 
-    </div>
+    </div></>
   );
 }

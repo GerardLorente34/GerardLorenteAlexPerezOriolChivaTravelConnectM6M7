@@ -3,12 +3,12 @@ import "./PaginaInicio.css";
 
 export default function PaginaInicio() {
   return (
+    <><Header />
     <div className="pagina-inicio">
-      <Header/>
-      <br/>
+      <br />
       <h1>TravelConnect</h1>
       <p>Bienvenidos. Aquí podrás gestionar y descubrir viajes.</p>
 
-    </div>
+    </div></>
   );
 }

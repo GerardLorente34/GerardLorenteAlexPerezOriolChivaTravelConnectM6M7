@@ -3,38 +3,38 @@ import "./registrar.css";
 
 export default function Registrar() {
   return (
+    <><Header />
     <div className="registrar-container">
-      <Header/>
-      <br/>
+      <br />
       <h1>Registrarse</h1>
 
       <form className="registrar-form">
-        <br/>
+        <br />
         <div>
           <label>Nombre:</label><br />
           <input type="text" />
         </div>
-        <br/>
+        <br />
         <div>
           <label>Email:</label><br />
           <input type="email" />
         </div>
-        <br/>
+        <br />
         <div>
           <label>Contraseña:</label><br />
           <input type="password" />
         </div>
-        <br/>
+        <br />
         <div>
           <label>Verificar contraseña:</label><br />
           <input type="password" />
         </div>
-        <br/>
+        <br />
         <button type="submit">Crear cuenta</button>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </form>
 
-    </div>
+    </div></>
   );
 }
