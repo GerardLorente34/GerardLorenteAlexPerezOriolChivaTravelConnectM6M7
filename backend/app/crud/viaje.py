@@ -33,14 +33,19 @@ def create_viaje(db: Session, viaje: ViajeCreate, creador_id: int):
 def update_viaje(db: Session, viaje_id: int, viaje: ViajeUpdate):
     db_viaje = db.query(Viaje).filter(Viaje.id == viaje_id).first()
     if not db_viaje:
-        return None
-    
-    for field, value in viaje.dict(exclude_unset=True).items():
+        return None, "Viaje no encontrado"
+
+    data = viaje.dict(exclude_unset=True)
+    nuevo_max = data.get("maximo_participantes")
+    if nuevo_max is not None and nuevo_max < db_viaje.total_participantes:
+        return None, "No se puede reducir el máximo por debajo de los inscritos"
+
+    for field, value in data.items():
         setattr(db_viaje, field, value)
-    
+
     db.commit()
     db.refresh(db_viaje)
-    return db_viaje
+    return db_viaje, None
 
 def inscribir_viajero(db: Session, viaje_id: int, usuario_id: int):
     viaje = db.query(Viaje).filter(Viaje.id == viaje_id).first()
@@ -83,8 +88,12 @@ def desinscribir_viajero(db: Session, viaje_id: int, usuario_id: int):
 
 def delete_viaje(db: Session, viaje_id: int):
     db_viaje = db.query(Viaje).filter(Viaje.id == viaje_id).first()
-    if db_viaje:
-        db.delete(db_viaje)
-        db.commit()
-        return True
-    return False
+    if not db_viaje:
+        return False, "Viaje no encontrado"
+
+    db_viaje.participantes.clear()  # evita restes a la taula N:N
+    db.commit()
+
+    db.delete(db_viaje)
+    db.commit()
+    return True, None
