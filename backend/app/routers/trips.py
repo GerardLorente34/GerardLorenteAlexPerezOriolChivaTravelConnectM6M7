@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..db.deps import get_db
-from ..crud.viajero import (
+from ..crud.viaje import (
     get_viajes_disponibles,
     get_viaje,
     inscribir_viajero,
