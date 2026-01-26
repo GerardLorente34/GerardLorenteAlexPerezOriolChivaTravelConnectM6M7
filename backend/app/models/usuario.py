@@ -3,12 +3,12 @@ from ..db.database import Base
 import enum
 
 class RolUsuario(str, enum.Enum):
-    VIAJERO = "viajero"
-    CREADOR = "creador"
-    ADMINISTRADOR = "administrador"
+    VIAJERO = "Viajero"
+    CREADOR = "Creador"
+    ADMINISTRADOR = "Administrador"
 
 class Usuario(Base):
-    __tablename__ = "usuarios"
+    __tablename__ = "Usuarios"
     
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, index=True, nullable=False)
