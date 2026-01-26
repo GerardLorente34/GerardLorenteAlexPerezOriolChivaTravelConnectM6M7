@@ -13,6 +13,22 @@ from .routers.promocion import router as promocion_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
 
+# CORS - Debe configurarse antes de los routers
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Ruta raíz
 @app.get("/")
 def read_root():
@@ -27,21 +43,5 @@ app.include_router(trips_router)
 app.include_router(chat_router)
 app.include_router(admin_router)
 app.include_router(promocion_router)
-
-# CORS
-origins = [
-    "http://localhost:5173",  # Vite dev
-    "http://127.0.0.1:5173",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500"
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
