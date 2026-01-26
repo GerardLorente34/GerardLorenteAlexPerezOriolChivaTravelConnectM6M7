@@ -13,21 +13,6 @@ from .routers.promocion import router as promocion_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
 
-# Ruta raíz
-@app.get("/")
-def read_root():
-    return {"message": "API agencia de viajes"}
-
-# Incluir routers
-app.include_router(auth_router)
-app.include_router(users_router)
-app.include_router(creador_router)
-app.include_router(viajero_router)
-app.include_router(trips_router)
-app.include_router(chat_router)
-app.include_router(admin_router)
-app.include_router(promocion_router)
-
 # CORS
 origins = [
     "http://localhost:5173",  # Vite dev
@@ -44,4 +29,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Ruta raíz
+@app.get("/")
+def read_root():
+    return {"message": "API agencia de viajes"}
+
+# Incluir routers
+app.include_router(auth_router)
+app.include_router(users_router)
+app.include_router(creador_router)
+app.include_router(viajero_router)
+app.include_router(trips_router)
+app.include_router(chat_router)
+app.include_router(admin_router)
+app.include_router(promocion_router)
 

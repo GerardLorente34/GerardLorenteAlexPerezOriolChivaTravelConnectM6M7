@@ -18,28 +18,34 @@ export default function Registrar() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    console.log("Enviando formulario...");
+  console.log("Enviando formulario...");
 
-    const data = {
-      nombre,
-      nickName,
-      email,
-      password,
-      veriPassword
-    }
+  if (password !== veriPassword) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
 
-    const response = await fetch("http://localhost:8000/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    });
-    const result = await response.json();
-    console.log(result);
+  const data = {
+    username: nickName,
+    email: email,
+    password: password,
+    full_name: nombre
   };
+
+  const response = await fetch("http://localhost:8000/auth/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  });
+
+  const result = await response.json();
+  console.log(result);
+};
+
 
   return (
     <><Header />
