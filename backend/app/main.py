@@ -13,7 +13,7 @@ from .routers.promocion import router as promocion_router
 
 app = FastAPI(title="Bienvenido a nuestra agencia de viajes")
 
-# CORS - Debe configurarse antes de los routers
+# CORS - Configurar antes de los routers
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -43,5 +43,6 @@ app.include_router(trips_router)
 app.include_router(chat_router)
 app.include_router(admin_router)
 app.include_router(promocion_router)
+
 
 
