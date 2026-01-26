@@ -10,8 +10,7 @@ class EstadoViaje(str, enum.Enum):
     COMPLETADO = "completado"
     CANCELADO = "cancelado"
 
-# Tabla de asociación para la relación ManyToMany entre Viatge 
-# y Usuari (participants)
+# Tabla de asociación para la relación ManyToMany entre Viaje y Usuario (participantes)
 viajes_participantes = Table(
     'viajes_participantes',
     Base.metadata,
@@ -30,17 +29,12 @@ class Viaje(Base):
     descripcion = Column(Text, nullable=True)
     maximo_participantes = Column(Integer, nullable=False)
     total_participantes = Column(Integer, default=0, nullable=False)
-    estado = Column(SQLEnum(EstadoViaje), default=EstadoViaje.PLANIFICADO, 
-                   nullable=False)
+    estado = Column(SQLEnum(EstadoViaje), default=EstadoViaje.PLANIFICADO, nullable=False)
     
     # ForeignKey: creador del viaje
     creador_id = Column(Integer, ForeignKey('usuarios.id'), nullable=False)
     
     # Relaciones
+    creador = relationship("Usuario", foreign_keys=[creador_id], back_populates="viajes_creados")
+    participantes = relationship("Usuario", secondary=viajes_participantes, back_populates="viajes_inscritos")
 
-    creador = relationship("Usuario", foreign_keys=[creador_id], 
-                           backref="viajes_creados")
-    participantes = relationship("Usuario", secondary=viajes_participantes, 
-                                backref="viajes_inscritos")
-    
-    
