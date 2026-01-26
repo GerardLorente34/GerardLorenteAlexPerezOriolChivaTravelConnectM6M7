@@ -1,5 +1,5 @@
 import Header from "../componentes/Header";
-import "./PaginaInicio.css";
+import "./paginaInicio.css";
 
 export default function PaginaInicio() {
   return (
