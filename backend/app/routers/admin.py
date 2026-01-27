@@ -5,9 +5,10 @@ from typing import List
 from ..schemas.usuario import UsuarioResponse
 from ..schemas.peticionPromocion import PeticionPromocionResponse
 from ..db.deps import get_db
-from ..models.usuario import Usuario
 from ..models.peticionPromocion import PeticionPromocion
 from ..utils.auth import get_current_user
+from ..models.usuario import Usuario, RolUsuario
+
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -18,8 +19,8 @@ class PromotionDecision(BaseModel):
     estado: str # "aprobado" o "rechazado"
 
 def check_admin(user: Usuario):
-    if user.rol !="admin":
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Usuario no autorizado, solo administradores")
+    if user.rol != RolUsuario.ADMINISTRADOR:
+        raise HTTPException(status_code=403, detail="Usuario no atuorizado, solo administradores")
 
 
 @router.get("/users", response_model=List[UsuarioResponse])
@@ -33,12 +34,19 @@ def change_user_role(user_id: int, payload: RoleUpdate, current_user: Usuario = 
 
     check_admin(current_user)
 
-    if payload.rol not in ("viajero", "creador", "admin"):
+    if payload.rol not in ("Viajero", "Creador", "Administrador"):
         raise HTTPException(status_code=400, detail="Rol inválido")
     
     user = db.query(Usuario).filter(Usuario.id == user_id).first()
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
+
+    mapping = {
+        "Viajero": RolUsuario.VIAJERO,
+        "Creador": RolUsuario.CREADOR,
+        "Administrador": RolUsuario.ADMINISTRADOR,
+    }
+    user.rol = mapping[payload.rol]
 
     user.rol = payload.rol
     db.commit()
@@ -76,11 +84,10 @@ def decidir_promocion(promotion_id: int, payload: PromotionDecision, current_use
         if not user:
             raise HTTPException(status_code=404, detail="Usuario solicitante no encontrado")
         
-        if user.rol == "viajero":
-            user.rol = "creador"
-    
+        if user.rol == RolUsuario.VIAJERO:
+            user.rol = RolUsuario.CREADOR
 
-    
+        
     db.commit()
     db.refresh(req)
     return req
