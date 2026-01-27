@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Enum as SQLEnum, Text
+from sqlalchemy.orm import relationship
 from ..db.database import Base
 import enum
 
@@ -18,4 +19,7 @@ class Usuario(Base):
     rol = Column(SQLEnum(RolUsuario), default=RolUsuario.VIAJERO, nullable=False)
     bio = Column(Text, nullable=True)
     
-   
+    # Relaciones con Viaje
+    viajes_creados = relationship("Viaje", foreign_keys="Viaje.creador_id", back_populates="creador")
+    viajes_inscritos = relationship("Viaje", secondary="viajes_participantes", back_populates="participantes")
+

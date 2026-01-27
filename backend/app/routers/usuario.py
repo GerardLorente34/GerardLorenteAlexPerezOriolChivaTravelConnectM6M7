@@ -5,7 +5,7 @@ from ..models.usuario import Usuario
 from ..db.deps import get_db
 from ..utils.auth import get_current_user_from_token
 
-router = APIRouter(prefix="/usuarios", tags=["usuarios"])
+router = APIRouter(prefix="/users", tags=["users"])
 
 @router.get("/me", response_model=UsuarioResponse)
 def get_perfil_actual(
