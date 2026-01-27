@@ -8,7 +8,7 @@ class RolUsuario(str, enum.Enum):
     ADMINISTRADOR = "Administrador"
 
 class Usuario(Base):
-    __tablename__ = "Usuarios"
+    __tablename__ = "usuarios"
     
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, index=True, nullable=False)

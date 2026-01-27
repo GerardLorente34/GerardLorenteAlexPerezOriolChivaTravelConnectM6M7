@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
 import "./registrar.css";
 
@@ -8,6 +9,8 @@ export default function Registrar() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [veriPassword, setVeriPassword] = useState("");
+
+  const navigate = useNavigate();
 
   const limpiarFormulario = () => {
     setNombre("");
@@ -44,6 +47,12 @@ export default function Registrar() {
 
   const result = await response.json();
   console.log(result);
+
+  if(response.ok){
+    alert("Registro de usuario completado!");
+    navigate("/inicioSesion");
+  }
+  
 };
 
 
