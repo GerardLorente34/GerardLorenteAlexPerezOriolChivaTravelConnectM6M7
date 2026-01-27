@@ -49,5 +49,3 @@ def delete_usuario(db: Session, usuario_id: int) -> bool:
     db.delete(db_usuario)
     db.commit()
     return True
-
-
