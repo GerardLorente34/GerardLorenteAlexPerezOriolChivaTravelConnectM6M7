@@ -250,6 +250,58 @@ Escalas de texto:
     │ usuario_id (FK, PK)  │
     └──────────────────────┘
 
+```mermaid
+erDiagram
+    USUARIOS {
+        int id PK
+        string username UNIQUE
+        string email UNIQUE
+        string hashed_password
+        string nombre_completo
+        enum rol
+        text bio
+    }
+
+    VIAJES {
+        int id PK
+        string nombre
+        string destino
+        date fecha_ini
+        date fecha_fin
+        text descripcion
+        int max_part
+        int total_pa
+        enum estado
+        int creador_id FK
+    }
+
+    MENSAJES {
+        int id PK
+        int viaje_id FK
+        int autor_id FK
+        text contenido
+        datetime timestamp
+    }
+
+    PETICIONES {
+        int id PK
+        int usuario_id FK
+        text mensaje
+        enum estado
+    }
+
+    VIAJES_PARTICIPANTES {
+        int viaje_id PK, FK
+        int usuario_id PK, FK
+    }
+
+    USUARIOS ||--o{ VIAJES : crea
+    USUARIOS ||--o{ MENSAJES : escribe
+    VIAJES ||--o{ MENSAJES : contiene
+    USUARIOS ||--o{ PETICIONES : realiza
+    VIAJES ||--o{ VIAJES_PARTICIPANTES : tiene
+    USUARIOS ||--o{ VIAJES_PARTICIPANTES : participa
+```
 #### Descripción de Tablas
 
 **USUARIOS**
