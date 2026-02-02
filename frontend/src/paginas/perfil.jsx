@@ -69,6 +69,7 @@ export default function Perfil() {
     console.log("Perfil actualizado:", data);
     setUser(data);
     alert("Perfil actualizado");
+    navigate("/");
   };
 
   if (!user) return <p>Cargando perfil...</p>;
@@ -80,6 +81,11 @@ export default function Perfil() {
             <h1>Mi Perfil</h1>
 
             <div className="perfil-card">
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    alt="avatar"
+                    className="perfil-avatar"
+                />
+
                 <p><strong>Usuario:</strong> {user.username}</p>
 
                 <label>Nombre completo:</label>

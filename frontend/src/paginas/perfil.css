@@ -24,6 +24,14 @@
   margin-bottom: 10px;
 }
 
+.perfil-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
 .perfil-card input,
 .perfil-card textarea {
   width: 100%;
