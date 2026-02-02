@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../componentes/Header";
 import "./perfil.css";
 
 export default function Perfil() {
@@ -10,6 +11,7 @@ export default function Perfil() {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token");
+    console.log("Token usado:", token);
 
     if (!token) {
       navigate("/inicioSesion");
@@ -21,11 +23,24 @@ export default function Perfil() {
         "Authorization": `Bearer ${token}`
       }
     })
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) {
+          console.error("Error al obtener perfil:", res.status);
+          navigate("/inicioSesion");
+          return;
+        }
+        return res.json();
+      })
       .then(data => {
+        if (!data) return;
+        console.log("Perfil recibido:", data);
         setUser(data);
         setNuevoNombre(data.nombre_completo || "");
         setNuevaBio(data.bio || "");
+      })
+      .catch(err => {
+        console.error("Error:", err);
+        navigate("/inicioSesion");
       });
   }, []);
 
@@ -44,7 +59,14 @@ export default function Perfil() {
       })
     });
 
+    if (!response.ok) {
+      console.error("Error al actualizar perfil:", response.status);
+      alert("No se pudo actualizar el perfil");
+      return;
+    }
+
     const data = await response.json();
+    console.log("Perfil actualizado:", data);
     setUser(data);
     alert("Perfil actualizado");
   };
@@ -52,27 +74,30 @@ export default function Perfil() {
   if (!user) return <p>Cargando perfil...</p>;
 
   return (
-    <div className="perfil-container">
-      <h1>Mi Perfil</h1>
+    <>
+    <Header/>
+        <div className="perfil-container">
+            <h1>Mi Perfil</h1>
 
-      <div className="perfil-card">
-        <p><strong>Usuario:</strong> {user.username}</p>
+            <div className="perfil-card">
+                <p><strong>Usuario:</strong> {user.username}</p>
 
-        <label>Nombre completo:</label>
-        <input
-          type="text"
-          value={nuevoNombre}
-          onChange={(e) => setNuevoNombre(e.target.value)}
-        />
+                <label>Nombre completo:</label>
+                <input
+                type="text"
+                value={nuevoNombre}
+                onChange={(e) => setNuevoNombre(e.target.value)}
+                />
 
-        <label>Bio:</label>
-        <textarea
-          value={nuevaBio}
-          onChange={(e) => setNuevaBio(e.target.value)}
-        />
+                <label>Bio:</label>
+                <textarea
+                value={nuevaBio}
+                onChange={(e) => setNuevaBio(e.target.value)}
+                />
 
-        <button onClick={actualizarPerfil}>Guardar cambios</button>
-      </div>
-    </div>
+                <button onClick={actualizarPerfil}>Guardar cambios</button>
+            </div>
+        </div>
+    </>
   );
 }

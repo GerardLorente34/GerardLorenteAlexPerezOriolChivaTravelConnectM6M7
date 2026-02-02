@@ -1,8 +1,13 @@
 .perfil-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   padding-top: 40px;
   width: 100%;
+}
+
+.perfil-container h1 {
+  margin-bottom: 20px;
 }
 
 .perfil-card {
@@ -12,6 +17,7 @@
   width: 380px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: 1px solid #ddd;
 }
 
 .perfil-card h2 {
