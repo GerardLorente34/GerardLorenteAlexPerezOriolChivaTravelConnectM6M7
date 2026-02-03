@@ -528,7 +528,19 @@ export function AuthProvider({ children }) {
   );
 }
 ```
+---
 
+## 4.3 Cambios recientes 
+
+### Frontend
+- **Página de perfil**: nueva vista para consultar y editar datos del usuario autenticado (nombre completo y bio).
+- **Formulario de solicitud a creador**: nueva página para enviar una petición de promoción de rol con mensaje.
+
+### Backend
+- **Usuarios**: endpoints `GET /users/me` y `PUT /users/me` para obtener y actualizar el perfil autenticado.
+- **Promoción de rol**: endpoint `POST /promote-request` para crear solicitudes de promoción.
+
+---
 ---
 
 ## 5. Conclusiones y Mejoras Futuras
