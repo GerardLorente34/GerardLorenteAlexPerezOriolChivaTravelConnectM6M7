@@ -530,7 +530,7 @@ export function AuthProvider({ children }) {
 ```
 ---
 
-## 4.3 Cambios recientes 
+## 4.4 Cambios recientes 
 
 ### Frontend
 - **Página de perfil**: nueva vista para consultar y editar datos del usuario autenticado (nombre completo y bio).
