@@ -1,0 +1,64 @@
+.crear-viaje-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Inter", sans-serif;
+}
+
+.crear-viaje-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 26px;
+  color: #333;
+}
+
+.crear-viaje-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.crear-viaje-form label {
+  font-weight: 600;
+  color: #444;
+}
+
+.crear-viaje-form input,
+.crear-viaje-form textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.crear-viaje-form input:focus,
+.crear-viaje-form textarea:focus {
+  border-color: #0077ff;
+  outline: none;
+}
+
+.crear-viaje-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.crear-viaje-form button {
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #0077ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.crear-viaje-form button:hover {
+  background-color: #005fcc;
+}

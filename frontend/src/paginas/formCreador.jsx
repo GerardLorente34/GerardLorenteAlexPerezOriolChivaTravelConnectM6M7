@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
-import "./formCreador.css";
+import "../estilos/formCreador.css";
 
 export default function FormCreador() {
   const [mensaje, setMensaje] = useState("");
@@ -34,22 +34,22 @@ export default function FormCreador() {
 
   return (
     <>
-    <Header/>
-        <div className="creador-container">
+      <Header />
+      <div className="creador-container">
         <h1>Solicitud para ser Creador</h1>
 
-      <form className="creador-card" onSubmit={enviarSolicitud}>
-        <label>¿Por qué quieres ser creador?</label>
-        <textarea
-          value={mensaje}
-          onChange={(e) => setMensaje(e.target.value)}
-          required
-        />
+        <form className="creador-card" onSubmit={enviarSolicitud}>
+          <label>¿Por qué quieres ser creador?</label>
+          <textarea
+            value={mensaje}
+            onChange={(e) => setMensaje(e.target.value)}
+            required
+          />
 
-        <button type="submit">Enviar solicitud</button>
-      </form>
-    </div>
+          <button type="submit">Enviar solicitud</button>
+        </form>
+      </div>
     </>
-    
+
   );
 }

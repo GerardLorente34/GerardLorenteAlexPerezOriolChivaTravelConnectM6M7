@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
-import "./inicioSesion.css";
+import "../estilos/inicioSesion.css";
+
 
 export default function InicioSesion() {
   const [nickName, setNickName] = useState("");
@@ -16,13 +17,13 @@ export default function InicioSesion() {
     formData.append("username", nickName);
     formData.append("password", password);
 
-  const response = await fetch("http://localhost:8000/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: formData.toString()
-  });
+    const response = await fetch("http://localhost:8000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: formData.toString()
+    });
 
 
     const result = await response.json();

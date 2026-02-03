@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
-import "./perfil.css";
+import "../estilos/perfil.css";
 
 export default function Perfil() {
   const [user, setUser] = useState(null);
@@ -76,34 +76,34 @@ export default function Perfil() {
 
   return (
     <>
-    <Header/>
-        <div className="perfil-container">
-            <h1>Mi Perfil</h1>
+      <Header />
+      <div className="perfil-container">
+        <h1>Mi Perfil</h1>
 
-            <div className="perfil-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-                    alt="avatar"
-                    className="perfil-avatar"
-                />
+        <div className="perfil-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            alt="avatar"
+            className="perfil-avatar"
+          />
 
-                <p><strong>Usuario:</strong> {user.username}</p>
+          <p><strong>Usuario:</strong> {user.username}</p>
 
-                <label>Nombre completo:</label>
-                <input
-                type="text"
-                value={nuevoNombre}
-                onChange={(e) => setNuevoNombre(e.target.value)}
-                />
+          <label>Nombre completo:</label>
+          <input
+            type="text"
+            value={nuevoNombre}
+            onChange={(e) => setNuevoNombre(e.target.value)}
+          />
 
-                <label>Bio:</label>
-                <textarea
-                value={nuevaBio}
-                onChange={(e) => setNuevaBio(e.target.value)}
-                />
+          <label>Bio:</label>
+          <textarea
+            value={nuevaBio}
+            onChange={(e) => setNuevaBio(e.target.value)}
+          />
 
-                <button onClick={actualizarPerfil}>Guardar cambios</button>
-            </div>
+          <button onClick={actualizarPerfil}>Guardar cambios</button>
         </div>
+      </div>
     </>
   );
 }
