@@ -1,0 +1,60 @@
+.creador-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+  width: 100%;
+}
+
+.creador-container h1 {
+  margin-bottom: 20px;
+}
+
+.creador-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 420px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.creador-card label {
+  font-weight: bold;
+  text-align: left;
+}
+
+.creador-card textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+  resize: none;
+  height: 120px;
+}
+
+.creador-card textarea:focus {
+  border-color: #007bff;
+}
+
+.creador-card button {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.creador-card button:hover {
+  background: #0056b3;
+}

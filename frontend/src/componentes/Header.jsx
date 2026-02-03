@@ -6,6 +6,11 @@ export default function Header() {
   const location = useLocation();
   const token = localStorage.getItem("access_token");
 
+  const cerrarSesion = () => {
+    localStorage.removeItem("access_token");
+    window.location.href = "/";
+  };
+
   return (
     <header className="header">
       <div className="logo-nombre">
@@ -14,11 +19,8 @@ export default function Header() {
       </div>
 
       <nav className="nav-enlaces">
-        {location.pathname !== "/" && (
-          <Link to="/">Inicio</Link>
-        )}
+        {location.pathname !== "/" && <Link to="/">Inicio</Link>}
 
-        {/* Si NO hay token → mostrar login y registro */}
         {!token && (
           <>
             <Link to="/inicioSesion">Iniciar sesión</Link>
@@ -26,9 +28,14 @@ export default function Header() {
           </>
         )}
 
-        {/* Si SÍ hay token → mostrar perfil */}
         {token && (
-          <Link to="/perfil">Mi perfil</Link>
+          <>
+            <Link to="/perfil">Mi perfil</Link>
+            <Link to="/promotion">Formulario Creador</Link>
+            <button className="logout-btn" onClick={cerrarSesion}>
+              Cerrar sesión
+            </button>
+          </>
         )}
       </nav>
     </header>

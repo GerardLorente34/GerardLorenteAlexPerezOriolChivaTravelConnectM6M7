@@ -37,3 +37,15 @@
 .nav-enlaces a:hover {
   color: #646cff;
 }
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: #ff4d4d;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.logout-btn:hover {
+  text-decoration: underline;
+}
