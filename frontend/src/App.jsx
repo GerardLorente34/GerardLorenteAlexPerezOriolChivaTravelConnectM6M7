@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CrearViaje from "./paginas/crearViaje";
+import Dashboard from "./paginas/dashboard";
+import DetalleViaje from "./paginas/detalleViaje";
 import FormCreador from "./paginas/formCreador";
 import InicioSesion from "./paginas/inicioSesion";
 import PaginaInicio from "./paginas/paginaInicio";
@@ -17,10 +19,12 @@ function App() {
 
         {/* Rutas Protegidas */}
         <Route path="/perfil" element={<Perfil />} />
-        <Route path="/promotion" element={<FormCreador />} />
+        <Route path="/trips/:id" element={<DetalleViaje />} />
+        <Route path="/dashboard" element={<Dashboard />} />
 
         {/* Rutas Protegidas (CREADOR)*/}
         <Route path="/creator/trips" element={<CrearViaje />} />
+        <Route path="/promotion" element={<FormCreador />} />
 
       </Routes>
     </BrowserRouter>

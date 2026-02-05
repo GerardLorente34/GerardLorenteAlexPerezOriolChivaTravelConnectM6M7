@@ -34,7 +34,7 @@ export default function InicioSesion() {
       localStorage.setItem("access_token", result.access_token);
 
       alert("Inicio de sesión correcto");
-      navigate("/");
+      navigate("/dashboard");
     } else {
       alert("Credenciales incorrectas");
     }

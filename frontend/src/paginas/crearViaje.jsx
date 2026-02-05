@@ -1,17 +1,22 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
 import "../estilos/crearViaje.css";
 
 export default function CrearViaje() {
     const token = localStorage.getItem("access_token");
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
+        nombre: "",
         titulo: "",
         descripcion: "",
         destino: "",
         fecha_inicio: "",
         fecha_fin: "",
         precio: "",
+        maximo_participantes: "",
+        estado: "activo", // valor por defecto
     });
 
     const handleChange = (e) => {
@@ -30,22 +35,39 @@ export default function CrearViaje() {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify({
+                ...formData,
+                precio: parseFloat(formData.precio), //Pasa a float el precio
+                maximo_participantes: parseInt(formData.maximo_participantes), //Pasa a int el maximo participantes
+            }),
         });
 
         if (response.ok) {
             alert("Viaje creado correctamente");
             setFormData({
+                nombre: "",
                 titulo: "",
                 descripcion: "",
                 destino: "",
                 fecha_inicio: "",
                 fecha_fin: "",
                 precio: "",
+                maximo_participantes: "",
+                estado: "activo",
             });
+            navigate("/");
         } else {
             const error = await response.json();
-            alert("Error: " + error.detail);
+            console.log("ERROR COMPLETO:", error);
+
+            if (Array.isArray(error.detail)) {
+                const mensajes = error.detail
+                    .map((e) => `${e.loc.join(" → ")}: ${e.msg}`)
+                    .join("\n");
+                alert("Error:\n" + mensajes);
+            } else {
+                alert("Error: " + error.detail);
+            }
         }
     };
 
@@ -56,6 +78,15 @@ export default function CrearViaje() {
                 <h2>Crear nuevo viaje</h2>
 
                 <form onSubmit={handleSubmit} className="crear-viaje-form">
+                    <label>Nombre del viaje</label>
+                    <input
+                        type="text"
+                        name="nombre"
+                        value={formData.nombre}
+                        onChange={handleChange}
+                        required
+                    />
+
                     <label>Título</label>
                     <input
                         type="text"
@@ -110,10 +141,30 @@ export default function CrearViaje() {
                         required
                     />
 
+                    <label>Máximo de participantes</label>
+                    <input
+                        type="number"
+                        name="maximo_participantes"
+                        value={formData.maximo_participantes}
+                        onChange={handleChange}
+                        required
+                    />
+
+                    <label>Estado</label>
+                    <select
+                        name="estado"
+                        value={formData.estado}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="activo">Activo</option>
+                        <option value="cancelado">Cancelado</option>
+                        <option value="completo">Completo</option>
+                    </select>
+
                     <button type="submit">Crear viaje</button>
                 </form>
             </div>
         </>
-
     );
 }

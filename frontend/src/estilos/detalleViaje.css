@@ -1,0 +1,50 @@
+.detalle-viaje-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-volver {
+  background: #0077cc;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.btn-volver:hover {
+  background: #0077cc;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.destino {
+  font-size: 1.2rem;
+  color: black;
+  margin-bottom: 20px;
+}
+
+.info-box p {
+  margin: 8px 0;
+}
+
+.btn-accion {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-accion:hover {
+  background: #005fa3;
+}

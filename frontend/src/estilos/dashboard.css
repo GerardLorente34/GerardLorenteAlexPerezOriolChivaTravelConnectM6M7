@@ -1,0 +1,63 @@
+.dashboard-container {
+  width: 90%;
+  max-width: 900px;
+  margin: 40px auto;
+}
+
+.viaje-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: 0.3s ease;
+}
+
+.viaje-card:hover {
+  transform: scale(1.01);
+}
+
+.viaje-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.viaje-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.viaje-header p {
+  margin: 0;
+  color: #555;
+}
+
+.viaje-header span {
+  background: #0077cc;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.viaje-detalle {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.btn-ver {
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-ver:hover {
+  background: #005fa3;
+}
