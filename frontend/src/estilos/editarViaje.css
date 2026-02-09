@@ -1,0 +1,36 @@
+.editar-viaje-container {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-editar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-editar input,
+.form-editar textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.btn-guardar {
+  margin-top: 15px;
+  padding: 12px;
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-guardar:hover {
+  background: #005fa3;
+}

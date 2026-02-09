@@ -6,7 +6,9 @@ export default function DetalleViaje() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [viaje, setViaje] = useState(null);
+
     const token = localStorage.getItem("access_token");
+    const userId = Number(localStorage.getItem("user_id"));
 
     const handleInscribirse = async () => {
         try {
@@ -19,7 +21,6 @@ export default function DetalleViaje() {
             });
 
             if (!response.ok) {
-                const error = await response.json();
                 alert("Error: Tienes que tener usuario para inscribirte");
                 return;
             }
@@ -43,7 +44,6 @@ export default function DetalleViaje() {
             });
 
             if (!response.ok) {
-                const error = await response.json();
                 alert("Error: Tienes que tener usuario para abandonar viaje");
                 return;
             }
@@ -90,13 +90,26 @@ export default function DetalleViaje() {
                 <p><strong>Participantes:</strong> {viaje.total_participantes}/{viaje.maximo_participantes}</p>
             </div>
 
-            <button className="btn-accion" onClick={handleInscribirse}>
-                Inscribirme
-            </button>
-            <br />
-            <button className="btn-accion" onClick={handleAbandonar}>
-                Abandonar Viaje
-            </button>
+            {/* BOTONES SOLO PARA VIAJEROS */}
+            {viaje.creador_id !== userId && (
+                <>
+                    <button className="btn-accion" onClick={handleInscribirse}>
+                        Inscribirme
+                    </button>
+                    <br />
+                    <button className="btn-accion" onClick={handleAbandonar}>
+                        Abandonar Viaje
+                    </button>
+                    <br />
+                </>
+            )}
+
+            {/* BOTÓN SOLO PARA EL CREADOR */}
+            {viaje.creador_id === userId && (
+                <button className="btn-accion" onClick={() => navigate(`/trips/${id}/edit`)}>
+                    Editar viaje
+                </button>
+            )}
         </div>
     );
 }

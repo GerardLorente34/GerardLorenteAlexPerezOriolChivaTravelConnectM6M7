@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Header from "../componentes/Header";
 import "../estilos/inicioSesion.css";
 
-
 export default function InicioSesion() {
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
@@ -12,7 +11,6 @@ export default function InicioSesion() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //Para pasar usuario, contraseña y no de error con OAuth2
     const formData = new URLSearchParams();
     formData.append("username", nickName);
     formData.append("password", password);
@@ -25,13 +23,14 @@ export default function InicioSesion() {
       body: formData.toString()
     });
 
-
     const result = await response.json();
-    console.log(result);
+    console.log("LOGIN:", result);
 
     if (response.ok) {
-      // Guarda el token
+      // Guarda token, user_id y rol
       localStorage.setItem("access_token", result.access_token);
+      localStorage.setItem("user_id", result.user_id);
+      localStorage.setItem("rol", result.rol);
 
       alert("Inicio de sesión correcto");
       navigate("/dashboard");
