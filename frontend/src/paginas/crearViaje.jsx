@@ -14,7 +14,6 @@ export default function CrearViaje() {
         destino: "",
         fecha_inicio: "",
         fecha_fin: "",
-        precio: "",
         maximo_participantes: "",
         estado: "activo", // valor por defecto
     });
@@ -37,7 +36,6 @@ export default function CrearViaje() {
             },
             body: JSON.stringify({
                 ...formData,
-                precio: parseFloat(formData.precio), //Pasa a float el precio
                 maximo_participantes: parseInt(formData.maximo_participantes), //Pasa a int el maximo participantes
             }),
         });
@@ -51,7 +49,6 @@ export default function CrearViaje() {
                 destino: "",
                 fecha_inicio: "",
                 fecha_fin: "",
-                precio: "",
                 maximo_participantes: "",
                 estado: "activo",
             });
@@ -131,16 +128,6 @@ export default function CrearViaje() {
                         required
                     />
 
-                    <label>Precio (€)</label>
-                    <input
-                        type="number"
-                        name="precio"
-                        step="0.01"
-                        value={formData.precio}
-                        onChange={handleChange}
-                        required
-                    />
-
                     <label>Máximo de participantes</label>
                     <input
                         type="number"
@@ -149,8 +136,7 @@ export default function CrearViaje() {
                         onChange={handleChange}
                         required
                     />
-
-                    <label>Estado</label>
+                    {/*<label>Estado</label>
                     <select
                         name="estado"
                         value={formData.estado}
@@ -160,7 +146,8 @@ export default function CrearViaje() {
                         <option value="activo">Activo</option>
                         <option value="cancelado">Cancelado</option>
                         <option value="completo">Completo</option>
-                    </select>
+                    </select>*/}
+
 
                     <button type="submit">Crear viaje</button>
                 </form>

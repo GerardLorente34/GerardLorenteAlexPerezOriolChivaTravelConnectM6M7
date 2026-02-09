@@ -36,7 +36,6 @@ export default function Dashboard() {
                             onClick={() => navigate(`/trips/${v.id}`)}
                         >
                             <h2>Viaje: {v.nombre}</h2>
-                            <p>Destino: {v.destino}</p>
                             <span>Estado: {v.estado}</span>
                         </div>
                     </div>

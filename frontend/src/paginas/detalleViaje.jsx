@@ -86,7 +86,6 @@ export default function DetalleViaje() {
                 <p><strong>Descripción:</strong> {viaje.descripcion}</p>
                 <p><strong>Fecha inicio:</strong> {viaje.fecha_inicio}</p>
                 <p><strong>Fecha fin:</strong> {viaje.fecha_fin}</p>
-                <p><strong>Precio:</strong> {viaje.precio} €</p>
                 <p><strong>Estado:</strong> {viaje.estado}</p>
                 <p><strong>Participantes:</strong> {viaje.total_participantes}/{viaje.maximo_participantes}</p>
             </div>
