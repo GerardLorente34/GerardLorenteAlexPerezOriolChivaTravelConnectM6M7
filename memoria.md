@@ -681,6 +681,9 @@ git branch -M main
 git remote add origin git@github.com:GerardLorente34/GerardLorenteAlexPerezOriolChivaTravelConnectM6M7.git
 git push -u origin main
 
+# Clonar repositorio existente
+git clone git@github.com:GerardLorente34/GerardLorenteAlexPerezOriolChivaTravelConnectM6M7.git
+
 # Comandos git del proyecto
 
 # Subir cambios
