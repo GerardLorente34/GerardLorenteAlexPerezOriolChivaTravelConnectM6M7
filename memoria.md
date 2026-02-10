@@ -213,43 +213,6 @@ Escalas de texto:
 
 ### 4.1 Diagrama de Base de Datos (MySQL)
 
-┌─────────────────┐
-│    USUARIOS     │
-├─────────────────┤
-│ id (PK)         │
-│ username        │ UNIQUE
-│ email           │ UNIQUE
-│ hashed_password │
-│ nombre_completo │
-│ rol             │ ENUM
-│ bio             │ TEXT
-└────────┬────────┘
-         │
-         ├────────────────────────┐
-         │                        │
-         │                        │
-    ┌────▼─────┐          ┌──────▼─────┐
-    │  VIAJES  │          │  MENSAJES  │
-    ├──────────┤          ├────────────┤
-    │ id (PK)  │          │ id (PK)    │
-    │ nombre   │          │ viaje_id FK├──┐
-    │ destino  │          │ autor_id FK├──┤
-    │ fecha_ini│          │ contenido  │  │
-    │ fecha_fin│          │ timestamp  │  │
-    │ descrip. │          └────────────┘  │
-    │ max_part │                          │
-    │ total_pa │                    ┌─────▼────┐
-    │ estado   │                    │PETICIONES│
-    │ creador_ FK                   ├──────────┤
-    └────┬─────┘                    │ id (PK)  │
-         │                          │ usuario_ FK
-    ┌────▼─────────────────┐        │ mensaje  │
-    │ VIAJES_PARTICIPANTES │        │ estado   │
-    ├──────────────────────┤        └──────────┘
-    │ viaje_id (FK, PK)    │
-    │ usuario_id (FK, PK)  │
-    └──────────────────────┘
-
 ```mermaid
 erDiagram
     USUARIOS {
@@ -302,6 +265,7 @@ erDiagram
     VIAJES ||--o{ VIAJES_PARTICIPANTES : tiene
     USUARIOS ||--o{ VIAJES_PARTICIPANTES : participa
 ```
+
 #### Descripción de Tablas
 
 **USUARIOS**
@@ -324,10 +288,6 @@ erDiagram
 **PETICIONES**
 - Solicitudes de promoción de rol
 - Estados: Pendiente, Aprobado, Rechazado
-
-```
-
-```
 
 ### 4.2 Estructura de API (FastAPI)
 
@@ -568,19 +528,83 @@ export function AuthProvider({ children }) {
   );
 }
 ```
-
 ---
 
 ## 4.4 Cambios recientes 
 
 ### Frontend
-- **Página de perfil**: nueva vista para consultar y editar datos del usuario autenticado (nombre completo y bio).
-- **Formulario de solicitud a creador**: nueva página para enviar una petición de promoción de rol con mensaje.
+
+#### Nuevas páginas implementadas
+- **[Dashboard](frontend/src/paginas/dashboard.jsx)**: listado de viajes disponibles con tarjetas interactivas y navegación a detalles
+- **[Detalle de Viaje](frontend/src/paginas/detalleViaje.jsx)**: vista completa de un viaje con opciones de inscripción/abandono según el rol del usuario
+- **[Crear Viaje](frontend/src/paginas/crearViaje.jsx)**: formulario completo para que los creadores puedan publicar nuevos viajes
+- **[Editar Viaje](frontend/src/paginas/editarViaje.jsx)**: permite a los creadores modificar sus viajes existentes
+- **[Perfil](frontend/src/paginas/perfil.jsx)**: vista para consultar y editar datos del usuario autenticado (nombre completo y bio)
+- **[Formulario Creador](frontend/src/paginas/formCreador.jsx)**: página para enviar solicitud de promoción de rol con mensaje
+
+#### Mejoras en componentes
+- **[Header](frontend/src/componentes/Header.jsx)**: 
+  - Implementación de lógica condicional según rol del usuario
+  - Mostrar enlace "Crear viaje" solo para usuarios con rol CREADOR
+  - Mostrar "Formulario Creador" solo para usuarios que NO sean CREADOR
+  - Botón de cerrar sesión funcional
+  - Fetch del rol del usuario autenticado mediante endpoint `/users/me`
+
+#### Nuevos estilos CSS
+- **[dashboard.css](frontend/src/estilos/dashboard.css)**: tarjetas de viajes con efectos hover
+- **[detalleViaje.css](frontend/src/estilos/detalleViaje.css)**: diseño responsive para vista de detalle
+- **[crearViaje.css](frontend/src/estilos/crearViaje.css)**: formulario estilizado con validación visual
+- **[editarViaje.css](frontend/src/estilos/editarViaje.css)**: formulario de edición consistente
+- **[perfil.css](frontend/src/estilos/perfil.css)**: tarjeta de perfil con imagen avatar
+- **[formCreador.css](frontend/src/estilos/formCreador.css)**: formulario de solicitud estilizado
 
 ### Backend
-- **Usuarios**: endpoints `GET /users/me` y `PUT /users/me` para obtener y actualizar el perfil autenticado.
-- **Promoción de rol**: endpoint `POST /promote-request` para crear solicitudes de promoción.
 
+#### Nuevos routers implementados
+- **[trips.py](backend/app/routers/trips.py)**: endpoints públicos para listar viajes, ver detalles, inscribirse y abandonar viajes
+- **[creador.py](backend/app/routers/creador.py)**: endpoints protegidos para crear, editar y eliminar viajes (solo CREADOR/ADMIN)
+- **[usuario.py](backend/app/routers/usuario.py)**: endpoints `GET /users/me` y `PUT /users/me` para gestión de perfil autenticado
+- **[promocion.py](backend/app/routers/promocion.py)**: endpoint `POST /promote-request` para crear solicitudes de promoción de rol
+- **[chat.py](backend/app/routers/chat.py)**: sistema completo de mensajería con WebSockets para comunicación en tiempo real
+- **[admin.py](backend/app/routers/admin.py)**: panel de administración para gestionar usuarios y aprobar/rechazar solicitudes de promoción
+
+#### Nuevos CRUD operations
+- **[viaje.py](backend/app/crud/viaje.py)**: 
+  - `get_viajes_disponibles()`: obtener viajes con estado PLANIFICADO
+  - `inscribir_viajero()`: añadir participante con validación de cupo
+  - `desinscribir_viajero()`: remover participante
+  - `update_viaje()`: actualizar datos con validación de participantes
+  - `delete_viaje()`: eliminar viaje y relaciones
+- **[chat.py](backend/app/crud/chat.py)**: operaciones CRUD para mensajes del chat
+- **[peticion.py](backend/app/crud/peticion.py)**: gestión de solicitudes de promoción
+
+#### Nuevos modelos de base de datos
+- **[mensajesXat.py](backend/app/models/mensajesXat.py)**: modelo `MissatgeXat` para almacenar mensajes del chat con timestamp
+- **[peticionPromocion.py](backend/app/models/peticionPromocion.py)**: modelo `PeticionPromocion` con enum `EstadoPromocion` (Pendiente/Aprobado/Rechazado)
+
+#### Nuevos schemas
+- **[chat.py](backend/app/schemas/chat.py)**: `ChatMessageResponse` y `SendMessageRequest` para mensajería
+- **[peticionPromocion.py](backend/app/schemas/peticionPromocion.py)**: `PeticionPromocionResponse` para solicitudes
+
+#### Utilidades implementadas
+- **[chat.py](backend/app/utils/chat.py)**: `ConnectionManager` para gestionar conexiones WebSocket con broadcast por viaje
+- **[auth.py](backend/app/utils/auth.py)**: 
+  - Cambio de bcrypt a PBKDF2-SHA256 para evitar dependencias externas
+  - Función `get_current_user_from_token()` para inyección de dependencias
+
+### Configuración
+- **[vite.config.js](frontend/vite.config.js)**: configuración de Vite con plugin React SWC
+- **[database.py](backend/app/db/database.py)**: configuración de conexión MySQL con pool_pre_ping
+- **CORS**: configuración en [main.py](backend/app/main.py) para permitir localhost:5173 y 5500
+
+### Mejoras de seguridad
+- Autenticación Bearer Token en todos los endpoints protegidos
+- Validación de roles (VIAJERO, CREADOR, ADMINISTRADOR)
+- Verificación de propiedad de recursos (solo el creador puede editar/eliminar su viaje)
+- Hash de contraseñas con PBKDF2-SHA256
+
+
+---
 ---
 
 ## 5. Conclusiones y Mejoras Futuras
