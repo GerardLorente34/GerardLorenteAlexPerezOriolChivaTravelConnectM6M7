@@ -9,6 +9,7 @@ export default function DetalleViaje() {
 
     const token = localStorage.getItem("access_token");
     const userId = Number(localStorage.getItem("user_id"));
+    const rol = localStorage.getItem("rol");
 
     const handleInscribirse = async () => {
         try {
@@ -91,7 +92,7 @@ export default function DetalleViaje() {
             </div>
 
             {/* BOTONES SOLO PARA VIAJEROS */}
-            {viaje.creador_id !== userId && (
+            {rol !== "Administrador" && viaje.creador_id !== userId && (
                 <>
                     <button className="btn-accion" onClick={handleInscribirse}>
                         Inscribirme
@@ -104,12 +105,11 @@ export default function DetalleViaje() {
                 </>
             )}
 
-            {/* BOTÓN SOLO PARA EL CREADOR */}
-            {viaje.creador_id === userId && (
+            {/* BOTÓN PARA CREADOR O ADMIN */}
+            {(rol === "Administrador" || (rol === "Creador" && viaje.creador_id === userId)) && (
                 <button className="btn-accion" onClick={() => navigate(`/trips/${id}/edit`)}>
                     Editar viaje
-                </button>
-            )}
+                </button>)}
         </div>
     );
 }

@@ -88,14 +88,16 @@ export default function Perfil() {
 
           <p><strong>Usuario:</strong> {user.username}</p>
 
-          <label>Nombre completo:</label>
+          <p><strong>Rol usuario:</strong> {localStorage.getItem("rol")}</p>
+
+          <label><strong>Nombre completo:</strong></label>
           <input
             type="text"
             value={nuevoNombre}
             onChange={(e) => setNuevoNombre(e.target.value)}
           />
 
-          <label>Bio:</label>
+          <label><strong>Bio:</strong></label>
           <textarea
             value={nuevaBio}
             onChange={(e) => setNuevaBio(e.target.value)}

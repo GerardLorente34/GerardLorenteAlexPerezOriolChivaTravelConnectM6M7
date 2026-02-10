@@ -18,7 +18,7 @@ function App() {
         <Route path="/inicioSesion" element={<InicioSesion />} />
         <Route path="/registrar" element={<Registrar />} />
 
-        {/* Rutas Protegidas */}
+        {/* Rutas Protegidas (TODOS)*/}
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/trips/:id" element={<DetalleViaje />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -29,6 +29,8 @@ function App() {
         {/* Rutas Protegidas (CREADOR)*/}
         <Route path="/creator/trips" element={<CrearViaje />} />
         <Route path="/trips/:id/edit" element={<EditarViaje />} />
+
+        {/* Rutas Protegidas (ADMIN)*/}
 
       </Routes>
     </BrowserRouter>
