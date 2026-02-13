@@ -5,7 +5,10 @@ import "../estilos/editarViaje.css";
 export default function EditarViaje() {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const token = localStorage.getItem("access_token");
+    const rol = localStorage.getItem("rol");
+    const userId = Number(localStorage.getItem("user_id"));
 
     const [form, setForm] = useState({
         nombre: "",
@@ -17,6 +20,18 @@ export default function EditarViaje() {
     });
 
     useEffect(() => {
+        if (!token) {
+            navigate("/inicioSesion");
+            return;
+        }
+
+        if (rol !== "Administrador" && rol !== "Creador") {
+            navigate("/dashboard");
+            return;
+        }
+    }, []);
+
+    useEffect(() => {
         const fetchViaje = async () => {
             const response = await fetch(`http://localhost:8000/trips/${id}`, {
                 headers: { Authorization: `Bearer ${token}` },
@@ -24,7 +39,6 @@ export default function EditarViaje() {
 
             const data = await response.json();
 
-            // Evita inputs undefined
             setForm({
                 nombre: data.nombre || "",
                 destino: data.destino || "",

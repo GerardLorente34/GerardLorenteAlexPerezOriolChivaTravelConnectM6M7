@@ -92,7 +92,7 @@ export default function DetalleViaje() {
             </div>
 
             {/* BOTONES SOLO PARA VIAJEROS */}
-            {rol !== "Administrador" && viaje.creador_id !== userId && (
+            {rol === "Viajero" && viaje.creador_id !== userId && (
                 <>
                     <button className="btn-accion" onClick={handleInscribirse}>
                         Inscribirme
@@ -105,11 +105,14 @@ export default function DetalleViaje() {
                 </>
             )}
 
+
             {/* BOTÓN PARA CREADOR O ADMIN */}
-            {(rol === "Administrador" || (rol === "Creador" && viaje.creador_id === userId)) && (
+            {rol && (rol === "Administrador" || (rol === "Creador" && viaje.creador_id === userId)) && (
                 <button className="btn-accion" onClick={() => navigate(`/trips/${id}/edit`)}>
                     Editar viaje
-                </button>)}
+                </button>
+            )}
+
         </div>
     );
 }

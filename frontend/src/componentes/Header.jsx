@@ -9,7 +9,7 @@ export default function Header() {
   const [rol, setRol] = useState(null);
 
   const cerrarSesion = () => {
-    localStorage.removeItem("access_token");
+    localStorage.clear();
     window.location.href = "/";
   };
 
