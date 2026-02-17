@@ -534,77 +534,69 @@ export function AuthProvider({ children }) {
 
 ### Frontend
 
-#### Nuevas páginas implementadas
-- **[Dashboard](frontend/src/paginas/dashboard.jsx)**: listado de viajes disponibles con tarjetas interactivas y navegación a detalles
-- **[Detalle de Viaje](frontend/src/paginas/detalleViaje.jsx)**: vista completa de un viaje con opciones de inscripción/abandono según el rol del usuario
-- **[Crear Viaje](frontend/src/paginas/crearViaje.jsx)**: formulario completo para que los creadores puedan publicar nuevos viajes
-- **[Editar Viaje](frontend/src/paginas/editarViaje.jsx)**: permite a los creadores modificar sus viajes existentes
-- **[Perfil](frontend/src/paginas/perfil.jsx)**: vista para consultar y editar datos del usuario autenticado (nombre completo y bio)
-- **[Formulario Creador](frontend/src/paginas/formCreador.jsx)**: página para enviar solicitud de promoción de rol con mensaje
+#### Nuevas páginas y rutas
+- **Dashboard de viajes** en [frontend/src/paginas/dashboard.jsx](frontend/src/paginas/dashboard.jsx): listado de viajes y navegación al detalle.
+- **Detalle de viaje** en [frontend/src/paginas/detalleViaje.jsx](frontend/src/paginas/detalleViaje.jsx): visualización completa con acciones de inscripción/abandono y edición según rol.
+- **Crear viaje** en [frontend/src/paginas/crearViaje.jsx](frontend/src/paginas/crearViaje.jsx): formulario para publicar viajes (rol Creador/Admin).
+- **Editar viaje** en [frontend/src/paginas/editarViaje.jsx](frontend/src/paginas/editarViaje.jsx): edición de viajes existentes con control de permisos en cliente.
+- **Perfil de usuario** en [frontend/src/paginas/perfil.jsx](frontend/src/paginas/perfil.jsx): consulta y actualización de `nombre_completo` y `bio`.
+- **Solicitud de promoción** en [frontend/src/paginas/formCreador.jsx](frontend/src/paginas/formCreador.jsx): envío de petición para cambio de rol.
+- **Router principal actualizado** en [frontend/src/App.jsx](frontend/src/App.jsx) con rutas públicas y protegidas.
 
 #### Mejoras en componentes
-- **[Header](frontend/src/componentes/Header.jsx)**: 
-  - Implementación de lógica condicional según rol del usuario
-  - Mostrar enlace "Crear viaje" solo para usuarios con rol CREADOR
-  - Mostrar "Formulario Creador" solo para usuarios que NO sean CREADOR
-  - Botón de cerrar sesión funcional
-  - Fetch del rol del usuario autenticado mediante endpoint `/users/me`
+- **Header dinámico** en [frontend/src/componentes/Header.jsx](frontend/src/componentes/Header.jsx):
+  - Renderizado condicional según autenticación y rol.
+  - Enlace a “Crear viaje” para rol Creador.
+  - Enlace a “Formulario Creador” para usuarios que no son Creador.
+  - Cierre de sesión con limpieza de `localStorage`.
 
-#### Nuevos estilos CSS
-- **[dashboard.css](frontend/src/estilos/dashboard.css)**: tarjetas de viajes con efectos hover
-- **[detalleViaje.css](frontend/src/estilos/detalleViaje.css)**: diseño responsive para vista de detalle
-- **[crearViaje.css](frontend/src/estilos/crearViaje.css)**: formulario estilizado con validación visual
-- **[editarViaje.css](frontend/src/estilos/editarViaje.css)**: formulario de edición consistente
-- **[perfil.css](frontend/src/estilos/perfil.css)**: tarjeta de perfil con imagen avatar
-- **[formCreador.css](frontend/src/estilos/formCreador.css)**: formulario de solicitud estilizado
+#### Estilos incorporados
+- [frontend/src/estilos/dashboard.css](frontend/src/estilos/dashboard.css)
+- [frontend/src/estilos/detalleViaje.css](frontend/src/estilos/detalleViaje.css)
+- [frontend/src/estilos/crearViaje.css](frontend/src/estilos/crearViaje.css)
+- [frontend/src/estilos/editarViaje.css](frontend/src/estilos/editarViaje.css)
+- [frontend/src/estilos/perfil.css](frontend/src/estilos/perfil.css)
+- [frontend/src/estilos/formCreador.css](frontend/src/estilos/formCreador.css)
+
+---
 
 ### Backend
 
-#### Nuevos routers implementados
-- **[trips.py](backend/app/routers/trips.py)**: endpoints públicos para listar viajes, ver detalles, inscribirse y abandonar viajes
-- **[creador.py](backend/app/routers/creador.py)**: endpoints protegidos para crear, editar y eliminar viajes (solo CREADOR/ADMIN)
-- **[usuario.py](backend/app/routers/usuario.py)**: endpoints `GET /users/me` y `PUT /users/me` para gestión de perfil autenticado
-- **[promocion.py](backend/app/routers/promocion.py)**: endpoint `POST /promote-request` para crear solicitudes de promoción de rol
-- **[chat.py](backend/app/routers/chat.py)**: sistema completo de mensajería con WebSockets para comunicación en tiempo real
-- **[admin.py](backend/app/routers/admin.py)**: panel de administración para gestionar usuarios y aprobar/rechazar solicitudes de promoción
+#### Routers añadidos y ampliados
+- **Autenticación** en [backend/app/routers/auth.py](backend/app/routers/auth.py): registro y login con JWT.
+- **Usuario autenticado** en [backend/app/routers/usuario.py](backend/app/routers/usuario.py): `GET /users/me` y `PUT /users/me`.
+- **Viajes públicos** en [backend/app/routers/trips.py](backend/app/routers/trips.py): listado, detalle, inscripción y abandono.
+- **Gestión de creador** en [backend/app/routers/creador.py](backend/app/routers/creador.py): crear, editar y eliminar viajes con validación de rol/propiedad.
+- **Promoción de rol** en [backend/app/routers/promocion.py](backend/app/routers/promocion.py): `POST /promote-request`.
+- **Chat (REST + WebSocket)** en [backend/app/routers/chat.py](backend/app/routers/chat.py): histórico, envío de mensajes y canal en tiempo real.
+- **Administración** en [backend/app/routers/admin.py](backend/app/routers/admin.py): gestión de usuarios y peticiones de promoción.
+- Registro de todos los routers en [backend/app/main.py](backend/app/main.py).
 
-#### Nuevos CRUD operations
-- **[viaje.py](backend/app/crud/viaje.py)**: 
-  - `get_viajes_disponibles()`: obtener viajes con estado PLANIFICADO
-  - `inscribir_viajero()`: añadir participante con validación de cupo
-  - `desinscribir_viajero()`: remover participante
-  - `update_viaje()`: actualizar datos con validación de participantes
-  - `delete_viaje()`: eliminar viaje y relaciones
-- **[chat.py](backend/app/crud/chat.py)**: operaciones CRUD para mensajes del chat
-- **[peticion.py](backend/app/crud/peticion.py)**: gestión de solicitudes de promoción
+#### Lógica de negocio (CRUD)
+- Viajes en [backend/app/crud/viaje.py](backend/app/crud/viaje.py): disponibilidad por estado, inscripción/desinscripción, actualización con validación de cupo y borrado.
+- Chat en [backend/app/crud/chat.py](backend/app/crud/chat.py): persistencia y recuperación ordenada de mensajes.
+- Promociones en [backend/app/crud/peticion.py](backend/app/crud/peticion.py): creación y control de peticiones pendientes.
 
-#### Nuevos modelos de base de datos
-- **[mensajesXat.py](backend/app/models/mensajesXat.py)**: modelo `MissatgeXat` para almacenar mensajes del chat con timestamp
-- **[peticionPromocion.py](backend/app/models/peticionPromocion.py)**: modelo `PeticionPromocion` con enum `EstadoPromocion` (Pendiente/Aprobado/Rechazado)
-
-#### Nuevos schemas
-- **[chat.py](backend/app/schemas/chat.py)**: `ChatMessageResponse` y `SendMessageRequest` para mensajería
-- **[peticionPromocion.py](backend/app/schemas/peticionPromocion.py)**: `PeticionPromocionResponse` para solicitudes
-
-#### Utilidades implementadas
-- **[chat.py](backend/app/utils/chat.py)**: `ConnectionManager` para gestionar conexiones WebSocket con broadcast por viaje
-- **[auth.py](backend/app/utils/auth.py)**: 
-  - Cambio de bcrypt a PBKDF2-SHA256 para evitar dependencias externas
-  - Función `get_current_user_from_token()` para inyección de dependencias
-
-### Configuración
-- **[vite.config.js](frontend/vite.config.js)**: configuración de Vite con plugin React SWC
-- **[database.py](backend/app/db/database.py)**: configuración de conexión MySQL con pool_pre_ping
-- **CORS**: configuración en [main.py](backend/app/main.py) para permitir localhost:5173 y 5500
-
-### Mejoras de seguridad
-- Autenticación Bearer Token en todos los endpoints protegidos
-- Validación de roles (VIAJERO, CREADOR, ADMINISTRADOR)
-- Verificación de propiedad de recursos (solo el creador puede editar/eliminar su viaje)
-- Hash de contraseñas con PBKDF2-SHA256
-
+#### Modelos y esquemas nuevos
+- Modelos:
+  - [backend/app/models/mensajesXat.py](backend/app/models/mensajesXat.py)
+  - [backend/app/models/peticionPromocion.py](backend/app/models/peticionPromocion.py)
+- Schemas:
+  - [backend/app/schemas/chat.py](backend/app/schemas/chat.py)
+  - [backend/app/schemas/peticionPromocion.py](backend/app/schemas/peticionPromocion.py)
+  - [backend/app/schemas/usuario.py](backend/app/schemas/usuario.py)
+  - [backend/app/schemas/viajero_viaje.py](backend/app/schemas/viajero_viaje.py)
 
 ---
+
+### Configuración y seguridad
+
+- **CORS configurado** en [backend/app/main.py](backend/app/main.py) para `localhost:5173` y `localhost:5500`.
+- **Conexión MySQL** y sesión SQLAlchemy en [backend/app/db/database.py](backend/app/db/database.py) y [backend/app/db/deps.py](backend/app/db/deps.py).
+- **Hash de contraseñas con PBKDF2-SHA256** y validación JWT en [backend/app/utils/auth.py](backend/app/utils/auth.py).
+- **Gestión de conexiones WebSocket** por viaje en [backend/app/utils/chat.py](backend/app/utils/chat.py).
+- **Inicialización de tablas** en [backend/app/db/init_db.py](backend/app/db/init_db.py).
+
 ---
 
 ## 5. Conclusiones y Mejoras Futuras
@@ -704,13 +696,6 @@ git pull origin main
 - **Módulos**: M7 (Diseño de interfaces web)-> Gerard y Oriol, M6 (Desarrollo servidor)-> Alex Pérez
 - **Centro**: IES Ferreria
 - **Año**: 2025-2026
-```
-```
-### Nuestro Logo
-
-![alt text](frontend/public/logoPWeb.png)
-
-```
 
 
 
