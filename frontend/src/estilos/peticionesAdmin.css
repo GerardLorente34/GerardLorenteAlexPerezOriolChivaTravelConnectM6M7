@@ -21,3 +21,29 @@
   padding: 6px 10px;
   cursor: pointer;
 }
+
+/* Botón aprobar */
+.btn-aprobado {
+  background-color: #4caf50;
+  border: 1px solid #3e8e41;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-aprobado:hover {
+  background-color: #45a049;
+  color: white;
+}
+
+.btn-rechazado {
+  background-color: #f44336;
+  border: 1px solid #d32f2f;
+  color: white;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-rechazado:hover {
+  background-color: #e53935;
+}

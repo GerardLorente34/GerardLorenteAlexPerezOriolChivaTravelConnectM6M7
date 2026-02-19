@@ -74,6 +74,10 @@ export default function Header() {
               <Link to="/admin/users">Listar usuarios</Link>
             )}
 
+            {rol?.toUpperCase() === "ADMINISTRADOR" && (
+              <Link to="/admin/requests">Peticiones</Link>
+            )}
+
             <button className="logout-btn" onClick={cerrarSesion}>
               Cerrar sesión
             </button>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../componentes/Header";
 import "../estilos/peticionesAdmin.css";
 
 export default function PeticionesAdmin() {
@@ -60,13 +61,13 @@ export default function PeticionesAdmin() {
                             <tr key={p.id}>
                                 <td>{p.id}</td>
                                 <td>{p.usuario_solicitante_id}</td>
-                                <td>{p.mensaje}</td>
+                                <td>{p.mensaje_peticion}</td>
                                 <td>
-                                    <button onClick={() => decidirPeticion(p.id, "Aprobado")}>
+                                    <button className="btn-aprobado" onClick={() => decidirPeticion(p.id, "Aprobado")}>
                                         Aprobar
                                     </button>
                                     <br /><br />
-                                    <button onClick={() => decidirPeticion(p.id, "Rechazado")}>
+                                    <button className="btn-rechazado" onClick={() => decidirPeticion(p.id, "Rechazado")}>
                                         Rechazar
                                     </button>
                                 </td>
