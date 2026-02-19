@@ -1,0 +1,23 @@
+.tabla-requests {
+  width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.tabla-requests th,
+.tabla-requests td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.tabla-requests tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.tabla-requests button {
+  margin: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+}

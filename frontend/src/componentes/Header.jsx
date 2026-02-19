@@ -60,13 +60,18 @@ export default function Header() {
             <Link to="/perfil">Mi perfil</Link>
 
             {/* Se muestra si el rol no es CREADOR*/}
-            {rol?.toUpperCase() !== "CREADOR" && (
+            {rol?.toUpperCase() !== "CREADOR" && rol?.toUpperCase() !== "ADMINISTRADOR" && (
               <Link to="/promotion">Formulario Creador</Link>
             )}
 
             {/* Muestra solo el formulario crear viajes a los usuarios con rol CREADOR*/}
             {rol?.toUpperCase() === "CREADOR" && (
               <Link to="/creator/trips">Crear viaje</Link>
+            )}
+
+            {/*SE MUESTRA SOLO A USUARIO ADMIN*/}
+            {rol?.toUpperCase() === "ADMINISTRADOR" && (
+              <Link to="/admin/users">Listar usuarios</Link>
             )}
 
             <button className="logout-btn" onClick={cerrarSesion}>

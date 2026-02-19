@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import AdminUsuarios from "./paginas/adminUsuarios";
 import CrearViaje from "./paginas/crearViaje";
 import Dashboard from "./paginas/dashboard";
 import DetalleViaje from "./paginas/detalleViaje";
@@ -7,6 +8,7 @@ import FormCreador from "./paginas/formCreador";
 import InicioSesion from "./paginas/inicioSesion";
 import PaginaInicio from "./paginas/paginaInicio";
 import Perfil from "./paginas/perfil";
+import PeticionesAdmin from "./paginas/peticionesAdmin";
 import Registrar from "./paginas/registrar";
 
 function App() {
@@ -31,7 +33,8 @@ function App() {
         <Route path="/trips/:id/edit" element={<EditarViaje />} />
 
         {/* Rutas Protegidas (ADMIN)*/}
-
+        <Route path="/admin/users" element={<AdminUsuarios />} />
+        <Route path="/admin/requests" element={< PeticionesAdmin />} />
       </Routes>
     </BrowserRouter>
   );

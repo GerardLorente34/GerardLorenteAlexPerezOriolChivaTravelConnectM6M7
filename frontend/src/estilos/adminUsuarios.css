@@ -1,0 +1,27 @@
+.tabla-usuarios {
+  width: 70%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.tabla-usuarios th,
+.tabla-usuarios td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tabla-usuarios tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.tabla-usuarios button {
+  display: inline-block;
+  margin: 4px auto;
+}
+
+.admin-users-container h1 {
+  margin-left: 40px;
+}
