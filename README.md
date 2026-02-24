@@ -530,27 +530,31 @@ export function AuthProvider({ children }) {
 ```
 ---
 
+
 ## 4.4 Cambios recientes 
 
 ### Frontend
 
 #### Nuevas páginas y rutas
-- **Dashboard de viajes** en [frontend/src/paginas/dashboard.jsx](frontend/src/paginas/dashboard.jsx): listado de viajes y navegación al detalle.
-- **Detalle de viaje** en [frontend/src/paginas/detalleViaje.jsx](frontend/src/paginas/detalleViaje.jsx): visualización completa con acciones de inscripción/abandono y edición según rol.
-- **Crear viaje** en [frontend/src/paginas/crearViaje.jsx](frontend/src/paginas/crearViaje.jsx): formulario para publicar viajes (rol Creador/Admin).
-- **Editar viaje** en [frontend/src/paginas/editarViaje.jsx](frontend/src/paginas/editarViaje.jsx): edición de viajes existentes con control de permisos en cliente.
-- **Perfil de usuario** en [frontend/src/paginas/perfil.jsx](frontend/src/paginas/perfil.jsx): consulta y actualización de `nombre_completo` y `bio`.
-- **Solicitud de promoción** en [frontend/src/paginas/formCreador.jsx](frontend/src/paginas/formCreador.jsx): envío de petición para cambio de rol.
-- **Router principal actualizado** en [frontend/src/App.jsx](frontend/src/App.jsx) con rutas públicas y protegidas.
+- **Redirección de usuarios no logueados** Aquel que intente acceder a cualquier página será redirigido al login del frontend (`/inicioSesion`) para que se registre previamente.
+- **Panel de administración** en [frontend/src/paginas/adminDashboard.jsx](frontend/src/paginas/adminDashboard.jsx): vista protegida por rol Administrador.
+- **Gestión de usuarios (admin)** en [frontend/src/paginas/adminUsuarios.jsx](frontend/src/paginas/adminUsuarios.jsx): listado y acciones administrativas.
+- **Gestión de peticiones (admin)** en [frontend/src/paginas/peticionesAdmin.jsx](frontend/src/paginas/peticionesAdmin.jsx): aprobación/rechazo de promociones.
+- **Chat de viaje** en [frontend/src/paginas/chatViaje.jsx](frontend/src/paginas/chatViaje.jsx): carga de histórico y envío de mensajes por viaje.
+- **Perfil de usuario** en [frontend/src/paginas/perfil.jsx](frontend/src/paginas/perfil.jsx): edición de `nombre_completo` y `bio`.
+- **Router principal actualizado** en [frontend/src/App.jsx](frontend/src/App.jsx) con rutas públicas/protegidas y rutas de administración.
 
 #### Mejoras en componentes
 - **Header dinámico** en [frontend/src/componentes/Header.jsx](frontend/src/componentes/Header.jsx):
-  - Renderizado condicional según autenticación y rol.
-  - Enlace a “Crear viaje” para rol Creador.
-  - Enlace a “Formulario Creador” para usuarios que no son Creador.
-  - Cierre de sesión con limpieza de `localStorage`.
+  - Renderizado por autenticación y rol.
+  - Enlaces condicionales a crear viaje, promoción y panel admin.
+  - Cierre de sesión limpiando `localStorage`.
 
 #### Estilos incorporados
+- [frontend/src/estilos/adminDashboard.css](frontend/src/estilos/adminDashboard.css)
+- [frontend/src/estilos/adminUsuarios.css](frontend/src/estilos/adminUsuarios.css)
+- [frontend/src/estilos/peticionesAdmin.css](frontend/src/estilos/peticionesAdmin.css)
+- [frontend/src/estilos/chatViaje.css](frontend/src/estilos/chatViaje.css)
 - [frontend/src/estilos/dashboard.css](frontend/src/estilos/dashboard.css)
 - [frontend/src/estilos/detalleViaje.css](frontend/src/estilos/detalleViaje.css)
 - [frontend/src/estilos/crearViaje.css](frontend/src/estilos/crearViaje.css)
@@ -563,39 +567,33 @@ export function AuthProvider({ children }) {
 ### Backend
 
 #### Routers añadidos y ampliados
-- **Autenticación** en [backend/app/routers/auth.py](backend/app/routers/auth.py): registro y login con JWT.
-- **Usuario autenticado** en [backend/app/routers/usuario.py](backend/app/routers/usuario.py): `GET /users/me` y `PUT /users/me`.
-- **Viajes públicos** en [backend/app/routers/trips.py](backend/app/routers/trips.py): listado, detalle, inscripción y abandono.
-- **Gestión de creador** en [backend/app/routers/creador.py](backend/app/routers/creador.py): crear, editar y eliminar viajes con validación de rol/propiedad.
-- **Promoción de rol** en [backend/app/routers/promocion.py](backend/app/routers/promocion.py): `POST /promote-request`.
-- **Chat (REST + WebSocket)** en [backend/app/routers/chat.py](backend/app/routers/chat.py): histórico, envío de mensajes y canal en tiempo real.
-- **Administración** en [backend/app/routers/admin.py](backend/app/routers/admin.py): gestión de usuarios y peticiones de promoción.
-- Registro de todos los routers en [backend/app/main.py](backend/app/main.py).
+- **Administración** en [backend/app/routers/admin.py](backend/app/routers/admin.py): usuarios y promociones (`GET /admin/users`, `PUT /admin/users/{user_id}/promote`, `GET /admin/promotions`, `PUT /admin/promotions/{promotion_id}`).
+- **Chat** en [backend/app/routers/chat.py](backend/app/routers/chat.py): histórico, envío REST y WebSocket.
+- **Promoción** en [backend/app/routers/promocion.py](backend/app/routers/promocion.py): `POST /promote-request`.
+- **Usuario autenticado** en [backend/app/routers/usuario.py](backend/app/routers/usuario.py): `GET/PUT /users/me`.
+- Registro global de routers en [backend/app/main.py](backend/app/main.py).
 
 #### Lógica de negocio (CRUD)
-- Viajes en [backend/app/crud/viaje.py](backend/app/crud/viaje.py): disponibilidad por estado, inscripción/desinscripción, actualización con validación de cupo y borrado.
-- Chat en [backend/app/crud/chat.py](backend/app/crud/chat.py): persistencia y recuperación ordenada de mensajes.
-- Promociones en [backend/app/crud/peticion.py](backend/app/crud/peticion.py): creación y control de peticiones pendientes.
+- Viajes en [backend/app/crud/viaje.py](backend/app/crud/viaje.py):
+  - Validación para no reducir `maximo_participantes` por debajo de inscritos.
+  - Inscripción y desinscripción con control de estado/cupo.
+- Chat en [backend/app/crud/chat.py](backend/app/crud/chat.py):
+  - Validación de mensaje no vacío y persistencia con timestamp.
+- Promociones en [backend/app/crud/peticion.py](backend/app/crud/peticion.py):
+  - Evita múltiples peticiones pendientes por usuario.
 
-#### Modelos y esquemas nuevos
-- Modelos:
-  - [backend/app/models/mensajesXat.py](backend/app/models/mensajesXat.py)
-  - [backend/app/models/peticionPromocion.py](backend/app/models/peticionPromocion.py)
-- Schemas:
-  - [backend/app/schemas/chat.py](backend/app/schemas/chat.py)
-  - [backend/app/schemas/peticionPromocion.py](backend/app/schemas/peticionPromocion.py)
-  - [backend/app/schemas/usuario.py](backend/app/schemas/usuario.py)
-  - [backend/app/schemas/viajero_viaje.py](backend/app/schemas/viajero_viaje.py)
+#### Modelos y esquemas
+- Modelos: [backend/app/models/mensajesXat.py](backend/app/models/mensajesXat.py), [backend/app/models/peticionPromocion.py](backend/app/models/peticionPromocion.py)
+- Schemas: [backend/app/schemas/chat.py](backend/app/schemas/chat.py), [backend/app/schemas/peticionPromocion.py](backend/app/schemas/peticionPromocion.py), [backend/app/schemas/usuario.py](backend/app/schemas/usuario.py), [backend/app/schemas/viajero_viaje.py](backend/app/schemas/viajero_viaje.py)
 
 ---
 
 ### Configuración y seguridad
 
-- **CORS configurado** en [backend/app/main.py](backend/app/main.py) para `localhost:5173` y `localhost:5500`.
-- **Conexión MySQL** y sesión SQLAlchemy en [backend/app/db/database.py](backend/app/db/database.py) y [backend/app/db/deps.py](backend/app/db/deps.py).
-- **Hash de contraseñas con PBKDF2-SHA256** y validación JWT en [backend/app/utils/auth.py](backend/app/utils/auth.py).
-- **Gestión de conexiones WebSocket** por viaje en [backend/app/utils/chat.py](backend/app/utils/chat.py).
+- **CORS ampliado** en [backend/app/main.py](backend/app/main.py) para `localhost` y `127.0.0.1` en puertos `5173` y `5500`.
 - **Inicialización de tablas** en [backend/app/db/init_db.py](backend/app/db/init_db.py).
+- **Autenticación y roles** centralizados con JWT y comprobación de permisos en routers.
+- **Conexión y sesión SQLAlchemy** en [backend/app/db/database.py](backend/app/db/database.py) y [backend/app/db/deps.py](backend/app/db/deps.py).
 
 ---
 
@@ -693,7 +691,7 @@ git pull origin main
 ## Información del Proyecto
 
 - **Equipo**: Gerard Lorente, Álex Pérez, Oriol Chiva
-- **Módulos**: M7 (Diseño de interfaces web)-> Gerard y Oriol, M6 (Desarrollo servidor)-> Alex Pérez
+- **Módulos**: M7 (Desarrollo servidor)-> Gerard y Oriol, M6 (Diseño de interfaces web)-> Alex Pérez
 - **Centro**: IES Ferreria
 - **Año**: 2025-2026
 
