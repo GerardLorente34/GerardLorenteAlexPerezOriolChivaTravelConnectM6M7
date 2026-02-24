@@ -9,6 +9,10 @@ export default function Dashboard() {
     const token = localStorage.getItem("access_token");
 
     useEffect(() => {
+        if (!token) {
+            navigate("/inicioSesion");
+            return;
+        }
         const fetchViajes = async () => {
             const response = await fetch("http://localhost:8000/trips/", {
                 headers: {
