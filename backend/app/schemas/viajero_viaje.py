@@ -52,6 +52,9 @@ class ViajeResponse(BaseModel):
     total_participantes: int
     estado: str
     creador_id: int
+    
+    estoy_inscrito: bool = False
+    soy_creador: bool
 
     class Config:
         from_attributes = True

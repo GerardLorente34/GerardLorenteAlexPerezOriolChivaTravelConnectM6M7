@@ -14,15 +14,38 @@ from ..models.usuario import Usuario
 router = APIRouter(prefix="/trips", tags=["trips"])
 
 @router.get("/", response_model=list[ViajeResponse])
-def list_available_trips(db: Session = Depends(get_db)):
-    return get_viajes_disponibles(db)
+def list_available_trips(
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user_from_token)
+):
+    viajes = get_viajes_disponibles(db)
+
+    for viaje in viajes:
+        viaje.estoy_inscrito = any(
+            v.id == current_user.id for v in viaje.participantes
+        )
+        viaje.soy_creador = (viaje.creador_id == current_user.id)
+
+    return viajes
 
 @router.get("/{id}", response_model=ViajeResponse)
-def get_trip_detail(id: int, db: Session = Depends(get_db)):
+def get_trip_detail(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user_from_token)
+):
     viaje = get_viaje(db, id)
     if not viaje:
         raise HTTPException(status_code=404, detail="Viaje no encontrado")
+
+    viaje.estoy_inscrito = any(
+        v.id == current_user.id for v in viaje.participantes
+    )
+
+    viaje.soy_creador = (viaje.creador_id == current_user.id)
+
     return viaje
+
 
 @router.post("/{id}/enroll", response_model=ViajeResponse)
 def enroll_in_trip(

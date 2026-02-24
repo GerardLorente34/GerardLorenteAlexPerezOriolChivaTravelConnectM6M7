@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../componentes/Header";
 import "../estilos/peticionesAdmin.css";
 
 export default function PeticionesAdmin() {
@@ -10,17 +9,6 @@ export default function PeticionesAdmin() {
 
     const [peticiones, setPeticiones] = useState([]);
 
-    useEffect(() => {
-        if (!token) {
-            navigate("/inicioSesion");
-            return;
-        }
-
-        if (rol != "Administrador") {
-            navigate("/dashboard");
-            return;
-        }
-    }, []);
 
     //Sacar las peticiones de usuarios
     useEffect(() => {
@@ -40,9 +28,25 @@ export default function PeticionesAdmin() {
 
     }, []);
 
+    //Rechaza o Acepta peticion de usuario
+    const decidirPeticion = async (id, estado) => {
+        const response = await fetch(`http://localhost:8000/admin/promotions/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ estado }),
+        });
+
+        if (response.ok) {
+            //Para eliminar la peticion que esta en la tabla de peticiones
+            setPeticiones(peticiones.filter((p) => p.id !== id));
+        }
+    }
+
     return (
         <>
-            <Header />
             <div className="admin-requests-container">
                 <br />
                 <h1>Gestión de peticiones</h1>

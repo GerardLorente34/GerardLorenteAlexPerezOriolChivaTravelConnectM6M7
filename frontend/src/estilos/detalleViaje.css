@@ -48,3 +48,50 @@ h1 {
 .btn-accion:hover {
   background: #005fa3;
 }
+
+.btn-inscribir {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-inscribir:hover {
+  background: #218838;
+}
+
+.btn-salir {
+  margin-top: 12px;
+  padding: 10px 15px;
+  background: #ff8f07cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.btn-salir:hover {
+  background: #e08300c8;
+}
+
+.btn-eliminar {
+  margin-left: 10px;
+  margin-top: 20px;
+  padding: 10px 15px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-eliminar:hover {
+  background: #c9302c;
+}

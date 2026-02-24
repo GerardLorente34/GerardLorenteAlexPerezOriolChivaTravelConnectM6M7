@@ -48,7 +48,12 @@ def update_viaje(db: Session, viaje_id: int, viaje: ViajeUpdate):
     return db_viaje, None
 
 def inscribir_viajero(db: Session, viaje_id: int, usuario_id: int):
-    viaje = db.query(Viaje).filter(Viaje.id == viaje_id).first()
+    viaje = (
+        db.query(Viaje)
+        .options(joinedload(Viaje.participantes))
+        .filter(Viaje.id == viaje_id)
+        .first()
+    )
     if not viaje:
         return None, "Viaje no encontrado"
     
@@ -68,8 +73,14 @@ def inscribir_viajero(db: Session, viaje_id: int, usuario_id: int):
     db.refresh(viaje)
     return viaje, None
 
+
 def desinscribir_viajero(db: Session, viaje_id: int, usuario_id: int):
-    viaje = db.query(Viaje).filter(Viaje.id == viaje_id).first()
+    viaje = (
+        db.query(Viaje)
+        .options(joinedload(Viaje.participantes))
+        .filter(Viaje.id == viaje_id)
+        .first()
+    )
     if not viaje:
         return None, "Viaje no encontrado"
     

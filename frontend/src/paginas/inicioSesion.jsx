@@ -33,7 +33,16 @@ export default function InicioSesion() {
       localStorage.setItem("rol", result.rol);
 
       alert("Inicio de sesión correcto");
-      navigate("/dashboard");
+
+      // Redirección según rol
+      if (result.rol === "Administrador") {
+        navigate("/admin/dashboard");
+      } else if (result.rol === "Creador") {
+        navigate("/");
+      } else {
+        navigate("/");
+      }
+
     } else {
       alert("Credenciales incorrectas");
     }

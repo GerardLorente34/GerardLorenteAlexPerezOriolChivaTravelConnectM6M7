@@ -1,0 +1,40 @@
+/* Contenedor principal */
+.admin-dashboard-container {
+  width: 80%;
+  margin: 20px auto;
+}
+
+/* Título */
+.admin-dashboard-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Contenedor de botones */
+.admin-dashboard-buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Botones del panel */
+.admin-dashboard-btn {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #ddd;
+  color: black;
+  transition: 0.2s;
+  border-radius: 4px;
+}
+
+/* Botón activo */
+.admin-dashboard-btn.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Botón hover */
+.admin-dashboard-btn:hover {
+  background-color: #cfcfcf;
+}

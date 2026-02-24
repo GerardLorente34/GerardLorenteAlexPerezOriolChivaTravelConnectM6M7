@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, WebSocket, WebSoc
 from sqlalchemy.orm import Session
 from typing import List
 import jwt
+from sqlalchemy.orm import joinedload
 
 from ..db.deps import get_db
 from ..models.viajero import Viaje
@@ -15,11 +16,12 @@ router = APIRouter(prefix="/trips", tags=["chat"])
 
 
 def _verificar_acceso_chat(viaje: Viaje, usuario: Usuario):
-    if usuario not in viaje.participantes and viaje.creador_id != usuario.id:
+    if not any(v.id == usuario.id for v in viaje.participantes) and viaje.creador_id != usuario.id:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="No tienes acceso a este chat"
         )
+
 
 
 async def get_user_from_token(token: str, db: Session) -> Usuario:
@@ -39,7 +41,12 @@ def get_trip_chat_messages(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user_from_token)
 ):
-    viaje = db.query(Viaje).filter(Viaje.id == id).first()
+    viaje = (
+        db.query(Viaje)
+        .options(joinedload(Viaje.participantes))
+        .filter(Viaje.id == id)
+        .first()
+    )
     if not viaje:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
@@ -71,7 +78,12 @@ def send_chat_message(
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user_from_token)
 ):
-    viaje = db.query(Viaje).filter(Viaje.id == id).first()
+    viaje = (
+        db.query(Viaje)
+        .options(joinedload(Viaje.participantes))
+        .filter(Viaje.id == id)
+        .first()
+    )
     if not viaje:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
@@ -112,13 +124,18 @@ async def websocket_chat_endpoint(
         return
     
     # Verificar que el viaje existe
-    viaje = db.query(Viaje).filter(Viaje.id == trip_id).first()
+    viaje = (
+        db.query(Viaje) 
+        .options(joinedload(Viaje.participantes)) 
+        .filter(Viaje.id == trip_id)
+        .first() 
+    )
     if not viaje:
         await websocket.close(code=1008)
         return
     
     # Verificar acceso al chat
-    if user not in viaje.participantes and viaje.creador_id != user.id:
+    if not any(v.id == user.id for v in viaje.participantes) and viaje.creador_id != user.id:
         await websocket.close(code=1008)
         return
     

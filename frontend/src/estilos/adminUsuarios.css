@@ -17,11 +17,26 @@
   background-color: #fafafa;
 }
 
-.tabla-usuarios button {
-  display: inline-block;
-  margin: 4px auto;
-}
-
 .admin-users-container h1 {
   margin-left: 40px;
+}
+
+.acciones-usuario {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-eliminar-usuario {
+  padding: 6px 10px;
+  background: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-eliminar-usuario:hover {
+  background: #c9302c;
 }

@@ -28,23 +28,30 @@ def create_trip(
 
 @router.put("/trips/{id}", response_model=ViajeResponse)
 def update_own_trip(
-	id: int,
-	viaje: ViajeUpdate,
-	db: Session = Depends(get_db),
-	current_user: Usuario = Depends(get_current_user_from_token),
+    id: int,
+    viaje: ViajeUpdate,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user_from_token),
 ):
-	_require_creator_or_admin(current_user)
+    _require_creator_or_admin(current_user)
 
-	db_viaje = get_viaje(db, id)
-	if not db_viaje:
-		raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Viaje no encontrado")
-	if db_viaje.creador_id != current_user.id and current_user.rol != RolUsuario.ADMINISTRADOR:
-		raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="No puedes modificar este viaje")
+    db_viaje = get_viaje(db, id)
+    if not db_viaje:
+        raise HTTPException(status_code=404, detail="Viaje no encontrado")
 
-	updated, error = update_viaje(db, id, viaje)
-	if error:
-		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-	return updated
+    if db_viaje.creador_id != current_user.id and current_user.rol != RolUsuario.ADMINISTRADOR:
+        raise HTTPException(status_code=403, detail="No puedes modificar este viaje")
+
+    updated, error = update_viaje(db, id, viaje)
+    if error:
+        raise HTTPException(status_code=400, detail=error)
+
+    updated.estoy_inscrito = any(
+        v.id == current_user.id for v in updated.participantes
+    )
+    updated.soy_creador = (updated.creador_id == current_user.id)
+
+    return updated
 
 
 @router.delete("/trips/{id}")
