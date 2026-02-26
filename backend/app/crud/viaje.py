@@ -36,6 +36,13 @@ def update_viaje(db: Session, viaje_id: int, viaje: ViajeUpdate):
         return None, "Viaje no encontrado"
 
     data = viaje.dict(exclude_unset=True)
+    
+    if "estado" in data:
+        try:
+            data["estado"] = EstadoViaje(data["estado"])
+        except ValueError:
+            return None, "Estado inválido"
+        
     nuevo_max = data.get("maximo_participantes")
     if nuevo_max is not None and nuevo_max < db_viaje.total_participantes:
         return None, "No se puede reducir el máximo por debajo de los inscritos"

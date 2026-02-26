@@ -16,6 +16,7 @@ export default function EditarViaje() {
         descripcion: "",
         fecha_inicio: "",
         fecha_fin: "",
+        estado: "",
         maximo_participantes: "",
     });
 
@@ -45,6 +46,7 @@ export default function EditarViaje() {
                 descripcion: data.descripcion || "",
                 fecha_inicio: data.fecha_inicio || "",
                 fecha_fin: data.fecha_fin || "",
+                estado: data.estado || "",
                 maximo_participantes: data.maximo_participantes || "",
             });
         };
@@ -99,6 +101,13 @@ export default function EditarViaje() {
 
                 <label>Fecha fin</label>
                 <input type="date" name="fecha_fin" value={form.fecha_fin} onChange={handleChange} />
+
+                <label>Estado del viaje</label>
+                <select name="estado" value={form.estado} onChange={handleChange}>
+                    <option value="planificado">Planificado</option>
+                    <option value="activo">Activo</option>
+                    <option value="completado">Completado</option>
+                    <option value="cancelado">Cancelado</option> </select>
 
                 <label>Máximo participantes</label>
                 <input type="number" name="maximo_participantes" value={form.maximo_participantes} onChange={handleChange} />

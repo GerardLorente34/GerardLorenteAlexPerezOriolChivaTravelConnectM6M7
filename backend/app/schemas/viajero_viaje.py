@@ -29,6 +29,7 @@ class ViajeUpdate(BaseModel):
     fecha_fin: Optional[date] = None
     descripcion: Optional[str] = None
     maximo_participantes: Optional[int] = None
+    estado: Optional[str] = None
 
 # OUTPUT
 class ViajeroResponse(BaseModel):

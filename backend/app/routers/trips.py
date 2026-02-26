@@ -56,6 +56,10 @@ def enroll_in_trip(
     viaje, error = inscribir_viajero(db, id, current_user.id)
     if error:
         raise HTTPException(status_code=400, detail=error)
+    
+    viaje.estoy_inscrito = True
+    viaje.soy_creador = (viaje.creador_id == current_user.id)
+    
     return viaje
 
 @router.post("/{id}/leave", response_model=ViajeResponse)
@@ -67,4 +71,8 @@ def leave_trip(
     viaje, error = desinscribir_viajero(db, id, current_user.id)
     if error:
         raise HTTPException(status_code=400, detail=error)
+    
+    viaje.estoy_inscrito = False
+    viaje.soy_creador = (viaje.creador_id == current_user.id)
+    
     return viaje

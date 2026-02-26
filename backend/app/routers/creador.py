@@ -18,13 +18,18 @@ def _require_creator_or_admin(current_user: Usuario) -> None:
 
 @router.post("/trips", response_model=ViajeResponse, status_code=status.HTTP_201_CREATED)
 def create_trip(
-	viaje: ViajeCreate,
-	db: Session = Depends(get_db),
-	current_user: Usuario = Depends(get_current_user_from_token),
+    viaje: ViajeCreate,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user_from_token),
 ):
-	_require_creator_or_admin(current_user)
-	return create_viaje(db, viaje, current_user.id)
+    _require_creator_or_admin(current_user)
 
+    nuevo_viaje = create_viaje(db, viaje, current_user.id)
+
+    nuevo_viaje.estoy_inscrito = False
+    nuevo_viaje.soy_creador = True
+
+    return nuevo_viaje
 
 @router.put("/trips/{id}", response_model=ViajeResponse)
 def update_own_trip(
