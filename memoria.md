@@ -529,13 +529,12 @@ export function AuthProvider({ children }) {
 }
 ```
 ---
-
 ## 4.4 Cambios recientes 
 
 ### Frontend
 
 #### Nuevas páginas y rutas
-- **Redirección de usuarios no logueados** Aquel que intente acceder a cualquier página será redirigido al login del frontend (`/inicioSesion`) para que se registre previamente.
+- **Redirección de usuarios no logueados**: cualquier acceso sin sesión redirige a `/inicioSesion`.
 - **Panel de administración** en [frontend/src/paginas/adminDashboard.jsx](frontend/src/paginas/adminDashboard.jsx): vista protegida por rol Administrador.
 - **Gestión de usuarios (admin)** en [frontend/src/paginas/adminUsuarios.jsx](frontend/src/paginas/adminUsuarios.jsx): listado y acciones administrativas.
 - **Gestión de peticiones (admin)** en [frontend/src/paginas/peticionesAdmin.jsx](frontend/src/paginas/peticionesAdmin.jsx): aprobación/rechazo de promociones.
@@ -561,8 +560,6 @@ export function AuthProvider({ children }) {
 - [frontend/src/estilos/perfil.css](frontend/src/estilos/perfil.css)
 - [frontend/src/estilos/formCreador.css](frontend/src/estilos/formCreador.css)
 
----
-
 ### Backend
 
 #### Routers añadidos y ampliados
@@ -584,8 +581,6 @@ export function AuthProvider({ children }) {
 #### Modelos y esquemas
 - Modelos: [backend/app/models/mensajesXat.py](backend/app/models/mensajesXat.py), [backend/app/models/peticionPromocion.py](backend/app/models/peticionPromocion.py)
 - Schemas: [backend/app/schemas/chat.py](backend/app/schemas/chat.py), [backend/app/schemas/peticionPromocion.py](backend/app/schemas/peticionPromocion.py), [backend/app/schemas/usuario.py](backend/app/schemas/usuario.py), [backend/app/schemas/viajero_viaje.py](backend/app/schemas/viajero_viaje.py)
-
----
 
 ### Configuración y seguridad
 
