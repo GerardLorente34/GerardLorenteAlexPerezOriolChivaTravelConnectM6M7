@@ -10,7 +10,7 @@ export default function DetalleViaje() {
 
     const token = localStorage.getItem("access_token");
     const userId = Number(localStorage.getItem("user_id"));
-    const rol = localStorage.getItem("rol");
+    const rol = (localStorage.getItem("rol") || "").toLowerCase();
 
     const handleInscribirse = async () => {
         try {
@@ -94,12 +94,17 @@ export default function DetalleViaje() {
         fetchViaje();
     }, [id]);
 
-    // ⛔ IMPORTANTE: NO ACCEDER A viaje.participantes ANTES DE ESTE IF
+    // IMPORTANTE: NO ACCEDER A viaje.participantes ANTES DE ESTE IF
     if (!viaje) return <p>Cargando viaje...</p>;
 
     // Ahora sí es seguro
     console.log("Participantes:", viaje.participantes);
     console.log("Mi userId:", userId);
+
+    console.log("ROL EN LOCALSTORAGE:", rol);
+    console.log("CREADOR ID:", viaje.creador_id);
+    console.log("MI USER ID:", userId);
+
 
     return (
         <div className="detalle-viaje-container">
@@ -119,7 +124,7 @@ export default function DetalleViaje() {
             </div>
 
             {/* BOTONES SOLO PARA VIAJEROS */}
-            {rol === "Viajero" && viaje.creador_id !== userId && (
+            {rol === "viajero" && viaje.creador_id !== userId && (
                 <>
                     <button className="btn-inscribir" onClick={handleInscribirse}>
                         Inscribirme
@@ -133,7 +138,7 @@ export default function DetalleViaje() {
             )}
 
             {/* BOTÓN PARA CREADOR O ADMIN */}
-            {rol && (rol === "Administrador" || (rol === "Creador" && viaje.creador_id === userId)) && (
+            {rol && (rol === "administrador" || (rol === "creador" && viaje.creador_id === userId)) && (
                 <>
                     <button className="btn-accion" onClick={() => navigate(`/trips/${id}/edit`)}>
                         Editar viaje
@@ -144,6 +149,7 @@ export default function DetalleViaje() {
                     </button>
                 </>
             )}
+
 
             {/* CHAT SOLO SI EL USUARIO ESTÁ INSCRITO */}
             {viaje && (viaje.estoy_inscrito || viaje.soy_creador) && (
