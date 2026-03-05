@@ -94,10 +94,8 @@ export default function DetalleViaje() {
         fetchViaje();
     }, [id]);
 
-    // IMPORTANTE: NO ACCEDER A viaje.participantes ANTES DE ESTE IF
     if (!viaje) return <p>Cargando viaje...</p>;
 
-    // Ahora sí es seguro
     console.log("Participantes:", viaje.participantes);
     console.log("Mi userId:", userId);
 
@@ -155,7 +153,6 @@ export default function DetalleViaje() {
             {viaje && (viaje.estoy_inscrito || viaje.soy_creador) && (
                 <ChatViaje viajeId={viaje.id} />
             )}
-
 
         </div>
     );

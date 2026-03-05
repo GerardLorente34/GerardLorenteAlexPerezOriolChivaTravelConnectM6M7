@@ -24,7 +24,8 @@ export default function FormCreador() {
     });
 
     if (!response.ok) {
-      alert("No se ha podido enviar el formulario");
+      const data = await response.json();
+      alert(data.detail);
       return;
     }
 

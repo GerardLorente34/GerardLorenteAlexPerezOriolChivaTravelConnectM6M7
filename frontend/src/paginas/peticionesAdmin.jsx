@@ -56,6 +56,7 @@ export default function PeticionesAdmin() {
                         <tr>
                             <th>ID</th>
                             <th>ID Usuario</th>
+                            <th>NickName</th>
                             <th>Mensaje</th>
                             <th>Acciones</th>
                         </tr>
@@ -65,6 +66,7 @@ export default function PeticionesAdmin() {
                             <tr key={p.id}>
                                 <td>{p.id}</td>
                                 <td>{p.usuario_solicitante_id}</td>
+                                <td>{p.username}</td>
                                 <td>{p.mensaje_peticion}</td>
                                 <td>
                                     <button className="btn-aprobado" onClick={() => decidirPeticion(p.id, "Aprobado")}>

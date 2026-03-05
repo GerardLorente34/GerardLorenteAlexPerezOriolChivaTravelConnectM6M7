@@ -15,6 +15,7 @@ class PromoteResponse(BaseModel):
     id: int
     usuario_solicitante_id: int
     mensaje_peticion: str
+    username: str
     estado: str
 
     class Config:
@@ -29,4 +30,10 @@ def create_promote_request(
     peticion, error = create_peticion(db, current_user.id, request.mensaje_peticion)
     if error:
         raise HTTPException(status_code=400, detail=error)
-    return peticion
+    return {
+        "id": peticion.id,
+        "usuario_solicitante_id": peticion.usuario_solicitante_id,
+        "mensaje_peticion": peticion.mensaje_peticion,
+        "username": current_user.username,
+        "estado": peticion.estado
+    }

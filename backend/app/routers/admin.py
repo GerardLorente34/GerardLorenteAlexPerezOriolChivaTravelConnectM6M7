@@ -53,10 +53,30 @@ def change_user_role(user_id: int, payload: RoleUpdate, current_user: Usuario = 
     db.refresh(user)
     return user
 
-@router.get("/promotions", response_model=List[PeticionPromocionResponse])
-def lista_promoticiones(current_user: Usuario = Depends(get_current_user), db: Session = Depends(get_db)):
+@router.get("/promotions")
+def lista_promoticiones(
+    current_user: Usuario = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
     check_admin(current_user)
-    return db.query(PeticionPromocion).filter(PeticionPromocion.estado == "Pendiente").all()
+
+    peticiones = db.query(PeticionPromocion).filter(
+        PeticionPromocion.estado == "Pendiente"
+    ).all()
+
+    resultado = []
+    for p in peticiones:
+        usuario = db.query(Usuario).filter(Usuario.id == p.usuario_solicitante_id).first()
+
+        resultado.append({
+            "id": p.id,
+            "usuario_solicitante_id": p.usuario_solicitante_id,
+            "mensaje_peticion": p.mensaje_peticion,
+            "username": usuario.username if usuario else None,
+            "estado": p.estado
+        })
+
+    return resultado
 
 
 @router.put("/promotions/{promotion_id}")

@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from ..models.peticionPromocion import PeticionPromocion, EstadoPromocion
+from ..models.usuario import Usuario
 
 def get_peticiones_pendientes(db: Session):
     return db.query(PeticionPromocion).filter(
@@ -19,6 +20,11 @@ def create_peticion(db: Session, usuario_id: int, mensaje: str):
     if existing:
         return None, "Ya tienes una petición pendiente"
     
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+    
+    if not usuario:
+        return None, "Usuario no encontrado"
+    
     nueva_peticion = PeticionPromocion(
         usuario_solicitante_id=usuario_id,
         mensaje_peticion=mensaje,
@@ -28,6 +34,7 @@ def create_peticion(db: Session, usuario_id: int, mensaje: str):
     db.add(nueva_peticion)
     db.commit()
     db.refresh(nueva_peticion)
+    
     return nueva_peticion, None
 
 def aprobar_peticion(db: Session, peticion_id: int):
