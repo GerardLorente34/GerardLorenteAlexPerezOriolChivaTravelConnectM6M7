@@ -563,20 +563,26 @@ export function AuthProvider({ children }) {
 ### Backend
 
 #### Routers añadidos y ampliados
+
 - **Administración** en [backend/app/routers/admin.py](backend/app/routers/admin.py): usuarios y promociones (`GET /admin/users`, `PUT /admin/users/{user_id}/promote`, `GET /admin/promotions`, `PUT /admin/promotions/{promotion_id}`).
 - **Chat** en [backend/app/routers/chat.py](backend/app/routers/chat.py): histórico, envío REST y WebSocket.
 - **Promoción** en [backend/app/routers/promocion.py](backend/app/routers/promocion.py): `POST /promote-request`.
+
 - **Usuario autenticado** en [backend/app/routers/usuario.py](backend/app/routers/usuario.py): `GET/PUT /users/me`.
 - Registro global de routers en [backend/app/main.py](backend/app/main.py).
 
+- **Administración** en [backend/app/routers/admin.py](backend/app/routers/admin.py):
+  - En `GET /admin/promotions` se devuelve también el campo `username` del usuario solicitante para mostrar su nombre en la tabla de aprobación/rechazo de peticiones.
+  - Se mantiene la gestión de promociones con `PUT /admin/promotions/{promotion_id}`.
+
+- **Promoción** en [backend/app/routers/promocion.py](backend/app/routers/promocion.py):
+  - La respuesta de `POST /promote-request` incluye `username` junto con los datos de la petición para unificar la información mostrada en administración.
+
 #### Lógica de negocio (CRUD)
-- Viajes en [backend/app/crud/viaje.py](backend/app/crud/viaje.py):
-  - Validación para no reducir `maximo_participantes` por debajo de inscritos.
-  - Inscripción y desinscripción con control de estado/cupo.
-- Chat en [backend/app/crud/chat.py](backend/app/crud/chat.py):
-  - Validación de mensaje no vacío y persistencia con timestamp.
-- Promociones en [backend/app/crud/peticion.py](backend/app/crud/peticion.py):
-  - Evita múltiples peticiones pendientes por usuario.
+- **Promociones** en [backend/app/crud/peticion.py](backend/app/crud/peticion.py):
+  - Validación de existencia del usuario solicitante antes de crear la petición.
+  - Control para evitar múltiples peticiones pendientes del mismo usuario.
+  - Persistencia de la petición en estado inicial `Pendiente`.
 
 #### Modelos y esquemas
 - Modelos: [backend/app/models/mensajesXat.py](backend/app/models/mensajesXat.py), [backend/app/models/peticionPromocion.py](backend/app/models/peticionPromocion.py)
